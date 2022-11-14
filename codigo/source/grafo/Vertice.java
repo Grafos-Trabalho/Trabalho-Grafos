@@ -87,6 +87,16 @@ public class Vertice {
     }
 
     /**
+     * Remove uma aresta deste vértice com um vétice de destino
+     * @param peso Peso da aresta (1 para grafos não ponderados)
+     * @param destino Vértice de destino
+    */
+    public boolean removeAresta(int destino) {
+        this.adj.remove(adj.find(destino));
+        return this.arestas.remove(destino);
+    }
+
+    /**
      * Verifica se já existe aresta entre este vértice e um destino. Método privado
      * 
      * @param destino Vértice de destino

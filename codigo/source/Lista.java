@@ -31,7 +31,7 @@ public class Lista<T> {
         return this.data.toArray(allData);
     }
 
-    public int length() {
+    public int size() {
         return this.data.size();
     }
 

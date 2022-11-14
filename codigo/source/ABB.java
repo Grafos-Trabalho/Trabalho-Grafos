@@ -1,5 +1,6 @@
 package source;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public class ABB<T> {
     private TreeMap<Integer, T> data;
@@ -21,9 +22,9 @@ public class ABB<T> {
         return false;
     }
 
-    public boolean remove(int key, T newElement) {
+    public boolean remove(int key) {
         if (!this.data.containsKey(key)) {
-            this.data.remove(key, newElement);
+            this.data.remove(key);
             return true;
         }
 
@@ -36,5 +37,9 @@ public class ABB<T> {
 
     public T[] allElements(T[] allData) {
         return this.data.values().toArray(allData);
+    }
+
+    public Stream<T> stream() {
+        return data.values().stream();
     }
 }
