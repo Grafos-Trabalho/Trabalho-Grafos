@@ -113,6 +113,13 @@ public abstract class Grafo implements Cloneable {
         return novo;
     }
 
+    public Vertice addVertice(int id, String rotulo) {
+        Vertice novo = new Vertice(id, rotulo);
+        this.vertices.add(id, novo);
+
+        return novo;
+    }
+
     /**
      * Método que retorna a lista de adjacência de um grafo
      */
@@ -151,6 +158,29 @@ public abstract class Grafo implements Cloneable {
         if (saida != null && chegada != null) {
             saida.addAresta(destino, peso);
             chegada.addAresta(origem, peso);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Método que adiciona uma aresta rotulada
+     * 
+     * @param origem  - Id do vértice de origem
+     * @param destino - Id do vértice de destino
+     * @param peso    - Peso da aresta
+     * @param rotulo  - Rotulo da aresta
+     * @return true Se a aresta foi adiciona
+     * @return false Se a aresta não foi adicionada
+     */
+    public boolean addAresta(int origem, int destino, int peso, String rotulo) {
+        Vertice saida = this.existeVertice(origem);
+        Vertice chegada = this.existeVertice(destino);
+
+        if (saida != null && chegada != null) {
+            saida.addAresta(destino, peso, rotulo);
+            chegada.addAresta(origem, peso, rotulo);
             return true;
         }
 

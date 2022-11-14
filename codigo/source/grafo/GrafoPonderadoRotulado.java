@@ -3,10 +3,10 @@ package source.grafo;
 import source.Lista;
 import source.Arquivo;
 
-public class GrafoPonderado extends GrafoMutavel {
+public class GrafoPonderadoRotulado extends GrafoMutavel {
     // #region Contrutor
 
-    public GrafoPonderado(String nome) {
+    public GrafoPonderadoRotulado(String nome) {
         super(nome);
     }
     // #endregion
@@ -14,7 +14,7 @@ public class GrafoPonderado extends GrafoMutavel {
     // #region boolean Aresta
 
     /**
-     * Método que adiciona uma aresta em um grafo ponderado
+     * Método que adiciona uma aresta com peso 0 em um grafo ponderado
      * 
      * @param origem  Id do vértice de origem
      * @param destino Id do vértice de destino
@@ -25,6 +25,21 @@ public class GrafoPonderado extends GrafoMutavel {
     public boolean addAresta(int origem, int destino) {
         return addAresta(origem, destino, 0);
     }
+
+    /**
+     * Método que adiciona uma aresta com peso em um grafo ponderado
+     * 
+     * @param origem  Id do vértice de origem
+     * @param destino Id do vértice de destino
+     * @param peso    Peso da aresta
+     * @return true Caso a aresta foi adicionada
+     * @return false Caso a aresta não foi adicionada
+     */
+    @Override
+    public boolean addAresta(int origem, int destino, int peso, String rotulo) {
+        return super.addAresta(origem, destino, peso, rotulo);
+    }
+
     // #endregion
 
     // #region Subgrafo
@@ -36,10 +51,10 @@ public class GrafoPonderado extends GrafoMutavel {
      * @return Grafo ponderado gerado
      */
     @Override
-    public GrafoPonderado subGrafo(Lista<Vertice> listaVertice) {
+    public GrafoPonderadoRotulado subGrafo(Lista<Vertice> listaVertice) {
         Vertice[] listaVertices = new Vertice[this.ordem()];
         listaVertices = listaVertice.allElements(listaVertices);
-        GrafoPonderado novoSubGrafo = new GrafoPonderado("subGrafo");
+        GrafoPonderadoRotulado novoSubGrafo = new GrafoPonderadoRotulado("subGrafo");
 
         for (int i = 0; i < listaVertices.length && listaVertices[i] != null; i++) {
             novoSubGrafo.addVertice(listaVertices[i].getId());

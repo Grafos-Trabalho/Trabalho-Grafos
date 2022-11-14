@@ -4,9 +4,10 @@ import source.ABB;
 import source.Lista;
 
 public class Vertice {
-    private ABB<Aresta> arestas;    
+    private ABB<Aresta> arestas;
     private final int id;
     private boolean visitado;
+    private String rotulo;
     private int tempoDescoberta, tempoTermino;
     private Vertice pai;
     private Lista<Vertice> adj;
@@ -27,7 +28,9 @@ public class Vertice {
         this.tempoTermino = tempoTermino;
     }
 
-    public Vertice getPai() { return this.pai; }
+    public Vertice getPai() {
+        return this.pai;
+    }
 
     public void setPai(Vertice pai) {
         this.pai = pai;
@@ -37,44 +40,59 @@ public class Vertice {
         return this.adj;
     }
 
-
     /**
      * Construtor para criação de vértice identificado
+     * 
      * @param id Número/id do vértice a ser criado (atributo final).
-    */
-    public Vertice(int id){
+     */
+    public Vertice(int id) {
         this.id = id;
         this.arestas = new ABB<Aresta>();
         this.adj = new Lista<Vertice>();
         this.visitado = false;
     }
 
+    public Vertice(int id, String rotulo) {
+        this.id = id;
+        this.arestas = new ABB<Aresta>();
+        this.adj = new Lista<Vertice>();
+        this.visitado = false;
+        this.rotulo = rotulo;
+    }
 
     /**
      * Adiciona uma aresta neste vértice para um destino
+     * 
      * @param destino Vértice de destino
-    */
-    public boolean addAresta(int destino){
+     */
+    public boolean addAresta(int destino) {
         adj.add(new Vertice(destino));
         return this.arestas.add(destino, new Aresta(0, destino));
     }
-    
+
     /**
      * Adiciona uma aresta neste vértice para um destino
-     * @param peso Peso da aresta (1 para grafos não ponderados)
+     * 
+     * @param peso    Peso da aresta (1 para grafos não ponderados)
      * @param destino Vértice de destino
-    */
-    public boolean addAresta(int destino, int peso){
+     */
+    public boolean addAresta(int destino, int peso) {
         this.adj.add(new Vertice(destino));
         return this.arestas.add(destino, new Aresta(peso, destino));
     }
 
+    public boolean addAresta(int destino, int peso, String rotulo) {
+        this.adj.add(new Vertice(destino));
+        return this.arestas.add(destino, new Aresta(peso, destino, rotulo));
+    }
+
     /**
      * Verifica se já existe aresta entre este vértice e um destino. Método privado
+     * 
      * @param destino Vértice de destino
      * @return TRUE se existe aresta, FALSE se não
-    */
-    public Aresta existeAresta(int destino){
+     */
+    public Aresta existeAresta(int destino) {
         return arestas.find(destino);
     }
 
@@ -85,28 +103,37 @@ public class Vertice {
         return allArestas;
     }
 
-    
     /**
      * Retorna o grau do vértice
+     * 
      * @return Grau (inteiro não negativo)
-    */
-    public int getGrau(){
+     */
+    public int getGrau() {
         return this.arestas.size();
     }
 
-    public void visitar(){
+    public void visitar() {
         this.visitado = true;
     }
-    
-    public void limparVisita(){
+
+    public void limparVisita() {
         this.visitado = false;
     }
-    
-    public boolean foiVisitado(){
+
+    public boolean foiVisitado() {
         return this.visitado;
     }
 
     public int getId() {
         return this.id;
     }
+
+    public String getRotulo() {
+        return rotulo;
+    }
+
+    public void setRotulo(String rotulo) {
+        this.rotulo = rotulo;
+    }
+
 }

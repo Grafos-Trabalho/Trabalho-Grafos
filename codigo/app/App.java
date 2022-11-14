@@ -2,6 +2,8 @@ package app;
 
 import source.Lista;
 import source.grafo.*;
+
+import java.util.*;
 import java.util.Random;
 
 public class App {
@@ -35,9 +37,9 @@ public class App {
         System.out.println("\n====================================================================\n");
         System.out.println("Grafo ponderado:");
 
-        GrafoPonderado grafoPonderado = new GrafoPonderado("grafoPonderado");
+        GrafoPonderadoRotulado GrafoPonderadoRotulado = new GrafoPonderadoRotulado("GrafoPonderadoRotulado");
         for (int i = 0; i < 40; i++) {
-            grafoPonderado.addVertice(i);
+            GrafoPonderadoRotulado.addVertice(i);
         }
 
         j = 2;
@@ -48,11 +50,11 @@ public class App {
         grafoNaoPonderado.addAresta(1, 5, 3);
         grafoNaoPonderado.addAresta(4, 7, 1);
 
-        System.out.println("Ordem do grafo ponderado: " + grafoPonderado.ordem());
-        System.out.println("Tamanho do grafo ponderado: " + grafoPonderado.tamanho());
-        grafoPonderado.salvar();
+        System.out.println("Ordem do grafo ponderado: " + GrafoPonderadoRotulado.ordem());
+        System.out.println("Tamanho do grafo ponderado: " + GrafoPonderadoRotulado.tamanho());
+        GrafoPonderadoRotulado.salvar();
 
-        GrafoPonderado grafoPonderado2 = new GrafoPonderado("grafoPonderado2");
+        GrafoPonderadoRotulado grafoPonderado2 = new GrafoPonderadoRotulado("grafoPonderado2");
         grafoPonderado2.carregar("grafoPonderado");
 
         System.out.println();
@@ -131,6 +133,26 @@ public class App {
 
         GrafoNaoPonderado subGrafo = grafoNaoPonderado1.subGrafo(listaDeVertices);
         subGrafo.salvar();
+
+        System.out.println("\n====================================================================\n");
+        System.out.println("Testando grafo ponderado e rotulado:\n");
+
+        GrafoPonderadoRotulado grafoPR = new GrafoPonderadoRotulado("1");
+        grafoPR.addVertice(1, "MG");
+        grafoPR.addVertice(2, "SP");
+        grafoPR.addVertice(3, "BA");
+        grafoPR.addAresta(1, 2, 500, "MG-SP");
+        grafoPR.addAresta(1, 3, 850, "MG-BA");
+        Vertice[] vertices = grafoPR.getAllVertices();
+        Lista<Aresta> listaArestasGrafoPR = grafoPR.getAllArestas();
+        for (Vertice vertice : vertices) {
+            System.out.println("Vertice " + vertice.getId() + " - Rótulo: " + vertice.getRotulo());
+            for (Aresta aresta : vertice.getAllArestas()) {
+                System.out.println("Aresta - Peso: " + aresta.getPeso() + " - Rótulo: " + aresta.getRotulo());
+            }
+        }
+
+        System.out.println("\n");
 
     }
 }
