@@ -14,7 +14,7 @@ public class Arquivo {
 
     public Arquivo(String path, String file, String type) throws IOException {
         File pasta = new File(path);
-        if(!pasta.exists()) {
+        if (!pasta.exists()) {
             pasta.mkdirs();
         }
 
@@ -23,15 +23,19 @@ public class Arquivo {
                 case "save":
                     this.buffWrite = new BufferedWriter(new FileWriter(path + file + ".txt"));
                     break;
-            
+
                 case "read":
                     this.buffRead = new BufferedReader(new FileReader(path + file + ".txt"));
                     break;
-                
+
+                case "net":
+                    this.buffWrite = new BufferedWriter(new FileWriter(path + file + ".net"));
+                    break;
+
                 default:
                     throw new Exception("Type incorrect");
             }
-    
+
             this.type = type;
         } catch (Exception e) {
             System.err.println("File not found");
@@ -44,8 +48,8 @@ public class Arquivo {
 
     public int numLines() throws IOException {
         int numLines = 0;
-        
-        while(buffRead.ready())
+
+        while (buffRead.ready())
             numLines++;
 
         return numLines;
@@ -53,24 +57,28 @@ public class Arquivo {
 
     public String readLine() throws IOException {
         return this.buffRead.readLine() + "\n";
-	}
+    }
 
     public void write(String string) throws IOException {
-		this.append(string);
-	}
+        this.append(string);
+    }
 
     public void write(int inteiro) throws IOException {
-		this.append(Integer.toString(inteiro));
-	}
+        this.append(Integer.toString(inteiro));
+    }
 
     public void close() throws IOException {
         switch (this.type) {
             case "save":
                 this.buffWrite.close();
                 break;
-        
+
             case "read":
                 this.buffRead.close();
+                break;
+
+            case "net":
+                this.buffWrite.close();
                 break;
         }
     }

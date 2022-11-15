@@ -29,7 +29,7 @@ public class App {
         grafoNaoPonderado.salvar();
 
         GrafoNaoPonderado grafoNaoPonderado2 = new GrafoNaoPonderado("grafoNaoPonderado2");
-        grafoNaoPonderado2.carregar("grafoNaoPonderado");
+        // grafoNaoPonderado2.carregar("grafoNaoPonderado");
 
         System.out.println("Ordem do grafo não ponderado 2: " + grafoNaoPonderado2.ordem());
         System.out.println("Tamanho do grafo não ponderado 2: " + grafoNaoPonderado2.tamanho());
@@ -55,7 +55,7 @@ public class App {
         GrafoPonderadoRotulado.salvar();
 
         GrafoPonderadoRotulado grafoPonderado2 = new GrafoPonderadoRotulado("grafoPonderado2");
-        grafoPonderado2.carregar("grafoPonderado");
+        // grafoPonderado2.carregar("grafoPonderado");
 
         System.out.println();
         System.out.println("Ordem do grafo ponderado 2: " + grafoPonderado2.ordem());
@@ -151,6 +151,8 @@ public class App {
                 System.out.println("Aresta - Peso: " + aresta.getPeso() + " - Rótulo: " + aresta.getRotulo());
             }
         }
+
+        grafoPR.salvar();
 
         System.out.println("\n");
 

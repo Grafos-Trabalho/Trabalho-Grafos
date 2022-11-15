@@ -69,5 +69,31 @@ public class GrafoPonderadoRotulado extends GrafoMutavel {
 
         return novoSubGrafo;
     }
+
+    @Override
+    public void salvar(String nomeArquivo) throws Exception {
+        Arquivo arq = new Arquivo("codigo/app/files/", nomeArquivo, "net");
+        arq.write("*Vertices " + this.getAllVertices().length + "\n");
+        for (Vertice vertice : this.getAllVertices()) {
+            arq.write(vertice.getId() + " \"" + vertice.getRotulo() + "\"" + "\n");
+        }
+        arq.write("*arcs\n");
+
+        for (Vertice vertice : this.getAllVertices()) {
+
+            for (Aresta aresta : vertice.getAllArestas()) {
+                arq.write(vertice.getId() + " " + aresta.getDestino() + " " + aresta.getPeso() + "\n");
+            }
+
+            arq.write("\n");
+        }
+
+        arq.close();
+    }
+
+    @Override
+    public void salvar() throws Exception {
+        salvar(this.nome);
+    }
     // #endregion
 }
