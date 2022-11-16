@@ -156,5 +156,25 @@ public class App {
 
         System.out.println("\n");
 
+        System.out.println("\n====================================================================\n");
+        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan:\n");
+
+        GrafoNaoPonderado grafoTarjan = new GrafoNaoPonderado("ponteTarjan");
+        grafoTarjan.addVertice(0);
+        grafoTarjan.addVertice(1);
+        grafoTarjan.addVertice(2);
+        grafoTarjan.addVertice(3);
+        grafoTarjan.addVertice(4);
+        grafoTarjan.addAresta(1, 0);
+        grafoTarjan.addAresta(0, 2);
+        grafoTarjan.addAresta(2, 1);
+        grafoTarjan.addAresta(0, 3);
+        grafoTarjan.addAresta(3, 4);
+        //grafoTarjan.printBridges();
+
+        grafoTarjan.salvar();
+
+        System.out.println("\n");
+
     }
 }

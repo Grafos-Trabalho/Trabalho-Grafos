@@ -300,4 +300,8 @@ public abstract class Grafo implements Cloneable {
     public List<Vertice> getOddVertices() {
         return vertices.stream().filter((vertice) -> vertice.getId() % 2 == 1).collect(Collectors.toList());
     }
+
+    // public void printBridges() {
+        
+    // }
 }

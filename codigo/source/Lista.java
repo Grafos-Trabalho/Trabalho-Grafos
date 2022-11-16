@@ -1,5 +1,6 @@
 package source;
 import java.util.LinkedList;
+import java.util.stream.Stream;
 
 public class Lista<T> {
     private LinkedList<T> data;
@@ -41,5 +42,9 @@ public class Lista<T> {
 
     public void push(T element) {
         this.data.push(element);
+    }
+
+    public Stream<T> stream() {
+        return this.data.stream();
     }
 }
