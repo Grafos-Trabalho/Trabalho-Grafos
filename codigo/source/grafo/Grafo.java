@@ -304,4 +304,34 @@ public abstract class Grafo implements Cloneable {
     // public void printBridges() {
         
     // }
+
+    public int[][] listaAdjacencia(){
+        Vertice [] array = new Vertice[vertices.size()];
+        vertices.allElements(array); 
+        int [][] matriz = new int [vertices.size()+1][vertices.size()+1];
+        matriz[0][0]=2;
+
+        //Padrão da primeira linha
+        for(int i=1; i<array.length+1;i++){
+            matriz[0][i]= array[i-1].getId();
+        }
+
+        //Padrão da primeira coluna
+        for(int i=1; i<array.length+1;i++){
+            matriz[i][0]= array[i-1].getId();
+        }
+
+        //Preenchendo a matriz
+        for(int i=0; i<array.length;i++){
+            for(int j=0; j<array.length;j++){
+                if(array[i].existeAresta(array[j].getId()) != null){
+                    matriz[i+1][j+1] = 1;
+                }else{
+                    matriz[i+1][j+1] = 0;
+                }
+            }
+        }
+
+        return matriz;
+    }
 }
