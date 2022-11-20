@@ -302,36 +302,77 @@ public abstract class Grafo implements Cloneable {
     }
 
     // public void printBridges() {
-        
+
     // }
 
-    public int[][] listaAdjacencia(){
-        Vertice [] array = new Vertice[vertices.size()];
-        vertices.allElements(array); 
-        int [][] matriz = new int [vertices.size()+1][vertices.size()+1];
-        matriz[0][0]=2;
+    public int[][] listaAdjacencia() {
+        Vertice[] array = new Vertice[vertices.size()];
+        vertices.allElements(array);
+        int[][] matriz = new int[vertices.size() + 1][vertices.size() + 1];
+        matriz[0][0] = 2;
 
-        //Padrão da primeira linha
-        for(int i=1; i<array.length+1;i++){
-            matriz[0][i]= array[i-1].getId();
+        // Padrão da primeira linha
+        for (int i = 1; i < array.length + 1; i++) {
+            matriz[0][i] = array[i - 1].getId();
         }
 
-        //Padrão da primeira coluna
-        for(int i=1; i<array.length+1;i++){
-            matriz[i][0]= array[i-1].getId();
+        // Padrão da primeira coluna
+        for (int i = 1; i < array.length + 1; i++) {
+            matriz[i][0] = array[i - 1].getId();
         }
 
-        //Preenchendo a matriz
-        for(int i=0; i<array.length;i++){
-            for(int j=0; j<array.length;j++){
-                if(array[i].existeAresta(array[j].getId()) != null){
-                    matriz[i+1][j+1] = 1;
-                }else{
-                    matriz[i+1][j+1] = 0;
+        // Preenchendo a matriz
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                if (array[i].existeAresta(array[j].getId()) != null) {
+                    matriz[i + 1][j + 1] = 1;
+                } else {
+                    matriz[i + 1][j + 1] = 0;
                 }
             }
         }
 
         return matriz;
+    }
+
+    public void ePonte() {
+        Vertice[] listaVertices = this.getAllVertices();
+        int[][] matriz = this.listaAdjacencia();
+        for (int i = 0; i < listaVertices.length; i++) {
+            for (int j = 0; j < listaVertices.length; j++) {
+                if (matriz[i + 1][j + 1] == 1) {
+                    matriz[i + 1][j + 1] = 0;
+                    matriz[j + 1][i + 1] = 0;
+                    int comp = getComponent(matriz);
+                    if (comp > 1)
+                        System.out.println(" Existe uma ponte entre o vértice " + i + " e o vértice " + j);
+                    matriz[i + 1][j + 1] = 1;
+                    matriz[j + 1][i + 1] = 1;
+                }
+            }
+        }
+    }
+
+    public static int getComponent(int[][] grafo) {
+        int n = grafo.length;
+        int count = 0;
+        boolean[] visited = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            if (visited[i] == false) {
+                count++;
+                dfs(grafo, i, visited);
+            }
+        }
+        return count;
+    }
+
+    public static void dfs(int[][] grafo, int node, boolean[] visited) {
+        visited[node] = true;
+        int n = grafo.length;
+        for (int i = 0; i < n; i++) {
+            if (grafo[node][i] == 1 && visited[i] == false) {
+                dfs(grafo, i, visited);
+            }
+        }
     }
 }

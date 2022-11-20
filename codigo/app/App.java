@@ -1,5 +1,6 @@
 package app;
 
+import source.Algorithms;
 import source.Lista;
 import source.grafo.*;
 
@@ -170,11 +171,13 @@ public class App {
         grafoTarjan.addAresta(2, 1);
         grafoTarjan.addAresta(0, 3);
         grafoTarjan.addAresta(3, 4);
-        //grafoTarjan.printBridges();
+        // grafoTarjan.printBridges();
 
         grafoTarjan.salvar();
 
         System.out.println("\n");
+
+        grafoTarjan.ePonte();
 
     }
 }

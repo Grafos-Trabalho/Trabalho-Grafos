@@ -5,7 +5,8 @@ import java.util.List;
 import source.grafo.*;
 
 public final class Algorithms {
-    private Algorithms() { }
+    private Algorithms() {
+    }
 
     /**
      * 
@@ -26,7 +27,7 @@ public final class Algorithms {
 
         int nonBridgeCount = Grafo.buscaEmProfundidade(to.getId()).size();
         Grafo.addAresta(from.getId(), to.getId(), 0);
-        
+
         return nonBridgeCount < bridgeCount;
     }
 
@@ -48,15 +49,15 @@ public final class Algorithms {
         int oddCount = oddVertices.size();
 
         if (oddCount == 0) {
-             path.add(Grafo.getVertice(0));
-             getEulerPath(Grafo, path, path.find(0));
+            path.add(Grafo.getVertice(0));
+            getEulerPath(Grafo, path, path.find(0));
         } else if (oddCount == 2) {
-             path.add(oddVertices.get(0));
-             getEulerPath(Grafo, path, path.find(0));
+            path.add(oddVertices.get(0));
+            getEulerPath(Grafo, path, path.find(0));
         } else {
-             throw new IllegalStateException("Euler properties infringed.");
+            throw new IllegalStateException("Euler properties infringed.");
         }
-        
+
         return path;
     }
 }
