@@ -166,18 +166,21 @@ public class App {
         grafoTarjan.addVertice(2);
         grafoTarjan.addVertice(3);
         grafoTarjan.addVertice(4);
+        grafoTarjan.addVertice(5);
         grafoTarjan.addAresta(1, 0);
         grafoTarjan.addAresta(0, 2);
         grafoTarjan.addAresta(2, 1);
         grafoTarjan.addAresta(0, 3);
         grafoTarjan.addAresta(3, 4);
+        grafoTarjan.addAresta(0, 5);
         // grafoTarjan.printBridges();
 
         grafoTarjan.salvar();
 
         System.out.println("\n");
 
-        grafoTarjan.ePonte();
+        boolean ponte = grafoTarjan.ePonte(3, 4);
+        System.out.println("O vértice 3-4 é ponte? - " + ponte);
 
     }
 }

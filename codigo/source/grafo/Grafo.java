@@ -335,22 +335,25 @@ public abstract class Grafo implements Cloneable {
         return matriz;
     }
 
-    public void ePonte() {
+    public boolean ePonte(int origem, int destino) {
         Vertice[] listaVertices = this.getAllVertices();
         int[][] matriz = this.listaAdjacencia();
         for (int i = 0; i < listaVertices.length; i++) {
             for (int j = 0; j < listaVertices.length; j++) {
-                if (matriz[i + 1][j + 1] == 1) {
-                    matriz[i + 1][j + 1] = 0;
-                    matriz[j + 1][i + 1] = 0;
-                    int comp = getComponent(matriz);
-                    if (comp > 1)
-                        System.out.println(" Existe uma ponte entre o vértice " + i + " e o vértice " + j);
-                    matriz[i + 1][j + 1] = 1;
-                    matriz[j + 1][i + 1] = 1;
+                if (i + 1 == origem + 1 && j + 1 == destino + 1) {
+                    if (matriz[origem + 1][destino + 1] == 1) {
+                        matriz[origem + 1][destino + 1] = 0;
+                        matriz[destino + 1][origem + 1] = 0;
+                        int comp = getComponent(matriz);
+                        if (comp > 1)
+                            return true;
+                        matriz[origem + 1][destino + 1] = 1;
+                        matriz[destino + 1][origem + 1] = 1;
+                    }
                 }
             }
         }
+        return false;
     }
 
     public static int getComponent(int[][] grafo) {
