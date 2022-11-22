@@ -1,5 +1,6 @@
 package source.grafo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -378,4 +379,68 @@ public abstract class Grafo implements Cloneable {
             }
         }
     }
+    Vertice select;
+    Vertice ultimo;
+    public List<Vertice> fleury (){
+        Boolean euleriano = true;
+        ABB<Vertice> grafoaux = vertices;
+        List<Vertice> caminho = new ArrayList<Vertice>();
+        int contador = 0;
+        for(Vertice selecionado : grafoaux.allElements(getAllVertices())){
+            if((selecionado.getGrau() % 2) != 0){
+                contador++;
+            }
+        }
+        if(contador>=3){
+            euleriano=false;
+        }
+        
+        Vertice [] array = grafoaux.allElements(getAllVertices());
+        
+        for(Vertice selecionado1 : array){{
+            if(selecionado1.getGrau() % 2 != 0){
+                select = selecionado1;
+            }
+        }}
+        if(select == null){
+            select = this.getVertice(1);
+        }
+        int controlador = 0;
+        if(euleriano){
+            Vertice selecionado = select;
+            caminho.add(selecionado);
+            while(this.tamanho() - this.vertices.size() >= controlador){
+                    for(Aresta arestaSelecionada: selecionado.getAllArestas()){
+                        if(ePonte(selecionado.getId(), arestaSelecionada.getDestino())){
+                            selecionado = grafoaux.find(arestaSelecionada.getDestino());
+                            caminho.add(selecionado);
+                            arestaSelecionada.foiVisitada();
+                            euleriano = false;
+                            //lançar excessão
+                        }
+                        else{
+                            selecionado = grafoaux.find(arestaSelecionada.getDestino());
+                            selecionado.getAllArestas()[0].foiVisitada();
+                            caminho.add(selecionado);
+                        } 
+                        controlador++;
+                    }
+                
+                ultimo = selecionado;
+            }
+        }else{
+            
+            //lançar excessão
+        }
+        if(ultimo.getId() == select.getId()){
+            euleriano = true;
+            //lançar excessão
+        }
+    
+        if(euleriano){
+            return caminho;
+        }
+        return caminho;
+        
+}
 }
