@@ -173,7 +173,10 @@ public class App {
         grafoTarjan.addAresta(0, 3);
         grafoTarjan.addAresta(3, 4);
         grafoTarjan.addAresta(0, 5);
-        // grafoTarjan.printBridges();
+        Lista<Aresta> arestas = new Lista<Aresta>();
+        arestas = grafoTarjan.tarjan();
+
+        arestas.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
 
         grafoTarjan.salvar();
 

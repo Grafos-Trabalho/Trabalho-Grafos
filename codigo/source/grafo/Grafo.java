@@ -379,68 +379,121 @@ public abstract class Grafo implements Cloneable {
             }
         }
     }
+
     Vertice select;
     Vertice ultimo;
-    public List<Vertice> fleury (){
+
+    public List<Vertice> fleury() {
         Boolean euleriano = true;
         ABB<Vertice> grafoaux = vertices;
         List<Vertice> caminho = new ArrayList<Vertice>();
         int contador = 0;
-        for(Vertice selecionado : grafoaux.allElements(getAllVertices())){
-            if((selecionado.getGrau() % 2) != 0){
+        for (Vertice selecionado : grafoaux.allElements(getAllVertices())) {
+            if ((selecionado.getGrau() % 2) != 0) {
                 contador++;
             }
         }
-        if(contador>=3){
-            euleriano=false;
+        if (contador >= 3) {
+            euleriano = false;
         }
-        
-        Vertice [] array = grafoaux.allElements(getAllVertices());
-        
-        for(Vertice selecionado1 : array){{
-            if(selecionado1.getGrau() % 2 != 0){
-                select = selecionado1;
+
+        Vertice[] array = grafoaux.allElements(getAllVertices());
+
+        for (Vertice selecionado1 : array) {
+            {
+                if (selecionado1.getGrau() % 2 != 0) {
+                    select = selecionado1;
+                }
             }
-        }}
-        if(select == null){
+        }
+        if (select == null) {
             select = this.getVertice(1);
         }
         int controlador = 0;
-        if(euleriano){
+        if (euleriano) {
             Vertice selecionado = select;
             caminho.add(selecionado);
-            while(this.tamanho() - this.vertices.size() >= controlador){
-                    for(Aresta arestaSelecionada: selecionado.getAllArestas()){
-                        if(ePonte(selecionado.getId(), arestaSelecionada.getDestino())){
-                            selecionado = grafoaux.find(arestaSelecionada.getDestino());
-                            caminho.add(selecionado);
-                            arestaSelecionada.foiVisitada();
-                            euleriano = false;
-                            //lançar excessão
-                        }
-                        else{
-                            selecionado = grafoaux.find(arestaSelecionada.getDestino());
-                            selecionado.getAllArestas()[0].foiVisitada();
-                            caminho.add(selecionado);
-                        } 
-                        controlador++;
+            while (this.tamanho() - this.vertices.size() >= controlador) {
+                for (Aresta arestaSelecionada : selecionado.getAllArestas()) {
+                    if (ePonte(selecionado.getId(), arestaSelecionada.getDestino())) {
+                        selecionado = grafoaux.find(arestaSelecionada.getDestino());
+                        caminho.add(selecionado);
+                        arestaSelecionada.foiVisitada();
+                        euleriano = false;
+                        // lançar excessão
+                    } else {
+                        selecionado = grafoaux.find(arestaSelecionada.getDestino());
+                        selecionado.getAllArestas()[0].foiVisitada();
+                        caminho.add(selecionado);
                     }
-                
+                    controlador++;
+                }
+
                 ultimo = selecionado;
             }
-        }else{
-            
-            //lançar excessão
+        } else {
+
+            // lançar excessão
         }
-        if(ultimo.getId() == select.getId()){
+
+        if (ultimo.getId() == select.getId()) {
             euleriano = true;
-            //lançar excessão
+            // lançar excessão
         }
-    
-        if(euleriano){
+
+        if (euleriano) {
             return caminho;
         }
+
         return caminho;
-        
-}
+    }
+
+    public Lista<Aresta> tarjan() {
+        return criticalConnections(this.vertices.size());
+    }
+
+    private static void DFS(Vertice w, int[] disc, int[] low, Lista<Aresta> bridge, int u, int tempo) {
+        w.limparVisita();
+        disc[u] = low[u] = tempo++;
+
+        Vertice[] adj = new Vertice[w.getListaAdjacencia().size()];
+        w.getListaAdjacencia().allElements(adj);
+
+        int index = 0;
+        for (Vertice verticeAdj : adj) {
+            if (disc[index] == -1) {
+                verticeAdj.setPai(w);
+                DFS(verticeAdj, disc, low, bridge, index, tempo);
+                low[u] = Math.min(low[u], low[index]);
+
+                if (low[index] > disc[u]) {
+                    bridge.add(w.existeAresta(verticeAdj.getId()));
+                }
+            } else if (!verticeAdj.equals(w.getPai()))
+                low[u] = Math.min(low[u], disc[index]);
+
+            index++;
+        }
+    }
+
+    private Lista<Aresta> criticalConnections(int V) {
+        int[] disc, low;
+        Lista<Aresta> bridge = new Lista<Aresta>();
+
+        disc = new int[V];
+        low = new int[V];
+
+        for (int i = 0; i < V; i++) {
+            disc[i] = -1;
+            low[i] = -1;
+        }
+
+        for (int i = 0; i < V; ++i) {
+            if (disc[i] == -1) {
+                DFS(this.getAllVertices()[i], disc, low, bridge, i, 0);
+            }
+        }
+
+        return bridge;
+    }
 }

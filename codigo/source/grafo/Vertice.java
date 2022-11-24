@@ -67,7 +67,7 @@ public class Vertice {
      */
     public boolean addAresta(int destino) {
         adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(0, destino));
+        return this.arestas.add(destino, new Aresta(0, this.getId(), destino));
     }
 
     /**
@@ -78,12 +78,12 @@ public class Vertice {
      */
     public boolean addAresta(int destino, int peso) {
         this.adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(peso, destino));
+        return this.arestas.add(destino, new Aresta(peso, this.getId(), destino));
     }
 
     public boolean addAresta(int destino, int peso, String rotulo) {
         this.adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(peso, destino, rotulo));
+        return this.arestas.add(destino, new Aresta(peso, this.getId(), destino, rotulo));
     }
 
     /**
@@ -145,5 +145,4 @@ public class Vertice {
     public void setRotulo(String rotulo) {
         this.rotulo = rotulo;
     }
-
 }

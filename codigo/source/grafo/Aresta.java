@@ -3,7 +3,7 @@ package source.grafo;
 public class Aresta {
     private int peso;
     private String rotulo;
-    private int destino;
+    private int origem, destino;
     private boolean visitada;
 
     /**
@@ -12,14 +12,16 @@ public class Aresta {
      * @param peso    Peso da aresta
      * @param destino Vértice de destino
      */
-    public Aresta(int peso, int destino) {
+    public Aresta(int peso, int origem, int destino) {
         this.peso = peso;
+        this.origem = origem;
         this.destino = destino;
         this.visitada = false;
     }
 
-    public Aresta(int peso, int destino, String rotulo) {
+    public Aresta(int peso, int origem, int destino, String rotulo) {
         this.peso = peso;
+        this.origem = origem;
         this.destino = destino;
         this.visitada = false;
         this.rotulo = rotulo;
@@ -39,6 +41,11 @@ public class Aresta {
      * 
      * @return the destino
      */
+
+    public int getOrigem() {
+        return this.origem;
+    }
+
     public int getDestino() {
         return this.destino;
     }
