@@ -13,7 +13,14 @@ public class Lista<T> {
     }
 
     public T find(int index) {
-        return this.data.get(index);
+        int i = 0;
+
+        for(T element : data) {
+            if(element == this.data.get(i++))
+                return element;
+        }
+
+        return null;
     }
 
     public boolean remove(T element) {

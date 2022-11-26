@@ -7,10 +7,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Grafo não ponderado:");
 
-        GrafoNaoPonderado grafoNaoPonderado = new GrafoNaoPonderado("grafoNaoPonderado");
-        for (int i = 0; i < 10; i++) {
-            grafoNaoPonderado.addVertice(i);
-        }
+        GrafoNaoPonderado grafoNaoPonderado = new GrafoNaoPonderado("grafoNaoPonderado", 10);
 
         int j = 2;
         for (int i = 0; i < 10; i++) {
@@ -34,10 +31,7 @@ public class App {
         System.out.println("\n====================================================================\n");
         System.out.println("Grafo ponderado:");
 
-        GrafoPonderadoRotulado GrafoPonderadoRotulado = new GrafoPonderadoRotulado("GrafoPonderadoRotulado");
-        for (int i = 0; i < 40; i++) {
-            GrafoPonderadoRotulado.addVertice(i);
-        }
+        GrafoPonderadoRotulado GrafoPonderadoRotulado = new GrafoPonderadoRotulado("GrafoPonderadoRotulado", 40);
 
         j = 2;
         for (int i = 0; i < 10; i++) {
@@ -203,6 +197,8 @@ public class App {
         grafoTarjan2.addAresta(12, 13);
 
         grafoTarjan2.addAresta(14, 15);
+
+        grafoTarjan2.removeAresta(10, 14);
 
         Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
 
