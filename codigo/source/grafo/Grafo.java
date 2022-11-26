@@ -24,10 +24,23 @@ public abstract class Grafo implements Cloneable {
     /**
      * Construtor. Cria um grafo vazio com capacidade para MAX_VERTICES
      */
-    public Grafo(String nome) {
-        this.nome = nome;
+    private void init() {
         this.vertices = new ABB<Vertice>();
         this.bridges = new Lista<Aresta>();
+    }
+
+    public Grafo(String nome, int tam) {
+        this.nome = nome;
+        init();
+
+        for(int i = 0; i < tam; i++) {
+            this.addVertice(i);
+        }
+    }
+
+    public Grafo(String nome) {
+        this.nome = nome;
+        init();
     }
     // #endregion
 
@@ -449,36 +462,7 @@ public abstract class Grafo implements Cloneable {
     }
 
     public Lista<Aresta> tarjan() {
-        this.BR();
-        return bridges;
-    }
-
-    private void dfsBR(Vertice vertice, Lista<Vertice> ancestrais) {
-        Vertice[] adj = new Vertice[vertice.getListaAdjacencia().size()];
-        vertice.getListaAdjacencia().allElements(adj);
-
-        for (Vertice verticeAdj : adj) {
-            if (!vertice.foiVisitado()) {
-                dfsBR(verticeAdj, ancestrais);
-
-                if (this.ePonte(vertice.getId(), verticeAdj.getId())) {
-                    this.bridges.add(vertice.existeAresta(verticeAdj.getId()));
-                }
-
-                vertice.setPai(verticeAdj);
-                ancestrais.add(verticeAdj);
-            } else
-                vertice.setPai(ancestrais.getFirt());
-        }
-    }
-
-    private void BR() {
-        Lista<Vertice> ancestrais = new Lista<Vertice>();
-
-        for (Vertice verticeOrigem : this.getAllVertices()) {
-            if (!verticeOrigem.foiVisitado()) {
-                dfsBR(verticeOrigem, ancestrais);
-            }
-        }
+        this.bridges.removeAll();
+        return Algorithms.BR(this, this.getAllVertices(), this.bridges);
     }
 }

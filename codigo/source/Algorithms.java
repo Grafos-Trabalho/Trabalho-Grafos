@@ -1,6 +1,5 @@
 package source;
 
-import java.util.Iterator;
 import java.util.List;
 import source.grafo.*;
 
@@ -8,36 +7,14 @@ public final class Algorithms {
     private Algorithms() {
     }
 
-    /**
-     * 
-     * @param u
-     * @param low
-     * @param disc
-     * @param stackMember
-     * @param st
-     */
 
-    private static boolean isBridge(Grafo Grafo, Vertice from, Vertice to) {
-        if (from.getListaAdjacencia().size() == 1) {
-            return false;
-        }
-
-        int bridgeCount = Grafo.buscaEmProfundidade(to.getId()).size();
-        Grafo.removeAresta(from.getId(), to.getId());
-
-        int nonBridgeCount = Grafo.buscaEmProfundidade(to.getId()).size();
-        Grafo.addAresta(from.getId(), to.getId(), 0);
-
-        return nonBridgeCount < bridgeCount;
-    }
-
-    private static void getEulerPath(Grafo Grafo, Lista<Vertice> path, Vertice from) {
-        Vertice[] listaAdjacencia = Grafo.listaAdjacencia(from.getId());
+    private static void getEulerPath(Grafo grafo, Lista<Vertice> path, Vertice from) {
+        Vertice[] listaAdjacencia = grafo.listaAdjacencia(from.getId());
         for (Vertice to : listaAdjacencia) {
-            if (!isBridge(Grafo, from, to)) {
+            if (!grafo.ePonte(from.getId(), to.getId())) {
                 path.add(to);
-                Grafo.removeAresta(from.getId(), to.getId());
-                getEulerPath(Grafo, path, to);
+                grafo.removeAresta(from.getId(), to.getId());
+                getEulerPath(grafo, path, to);
                 break;
             }
         }
@@ -59,5 +36,46 @@ public final class Algorithms {
         }
 
         return path;
+    }
+
+    private static void dfsBR(Grafo grafo, Vertice vertice, Lista<Aresta> bridges, Lista<Vertice> ancestrais) {
+        Vertice[] adj = new Vertice[vertice.getListaAdjacencia().size()];
+        vertice.getListaAdjacencia().allElements(adj);
+
+        for (Vertice verticeAdj : adj) {
+            if (!verticeAdj.foiVisitado()) {
+                verticeAdj.visitar();
+                
+                dfsBR(grafo, verticeAdj, bridges, ancestrais);
+
+                if (grafo.ePonte(vertice.getId(), verticeAdj.getId())) {
+                    bridges.add(vertice.existeAresta(verticeAdj.getId()));
+                }
+
+                vertice.setPai(verticeAdj);
+                ancestrais.add(verticeAdj);
+            } else
+                vertice.setPai(ancestrais.getFirt());
+        }
+    }
+
+    public static Lista<Aresta> BR(Grafo grafo, Vertice[] allVertices, Lista<Aresta> bridges) {
+        Lista<Vertice> ancestrais;
+
+        for (Vertice verticeOrigem : allVertices) {
+            verticeOrigem.limparVisita();
+        }
+
+        for (Vertice verticeOrigem : allVertices) {
+            if (!verticeOrigem.foiVisitado()) {
+                verticeOrigem.visitar();
+                ancestrais = new Lista<Vertice>();
+                ancestrais.add(verticeOrigem);
+
+                dfsBR(grafo, verticeOrigem, bridges, ancestrais);
+            }
+        }
+
+        return bridges;
     }
 }

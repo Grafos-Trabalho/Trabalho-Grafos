@@ -18,6 +18,23 @@ public class GrafoCompleto extends Grafo {
      * @param ordem Ordem do grafo a ser gerado
      * @return Grafo completo gerado
      */
+    public GrafoCompleto(String nome, int tam, int ordem) {
+        super(nome, tam);
+        this.setOrdem(ordem);
+
+        this.vertices = new ABB<>();
+        Vertice[] arrayVertices = new Vertice[ordem];
+
+        int i = 0;
+        for (Vertice vertice : arrayVertices) {
+            vertice = this.addVertice(i++);
+
+            for (int j = 0; j < (i - 1); j++) {
+                this.addAresta(j, vertice.getId(), 0);
+            }
+        }
+    }
+
     public GrafoCompleto(String nome, int ordem) {
         super(nome);
         this.setOrdem(ordem);

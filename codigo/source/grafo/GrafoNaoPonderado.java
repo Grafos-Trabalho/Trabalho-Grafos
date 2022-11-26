@@ -5,6 +5,10 @@ import source.Lista;
 public class GrafoNaoPonderado extends GrafoMutavel {
     // #region Contrutor
 
+    public GrafoNaoPonderado(String nome, int tam) {
+        super(nome, tam);
+    }
+
     public GrafoNaoPonderado(String nome) {
         super(nome);
     }

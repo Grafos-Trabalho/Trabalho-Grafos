@@ -160,13 +160,7 @@ public class App {
         System.out.println("\n====================================================================\n");
         System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan:\n");
 
-        GrafoNaoPonderado grafoTarjan = new GrafoNaoPonderado("ponteTarjan");
-        grafoTarjan.addVertice(0);
-        grafoTarjan.addVertice(1);
-        grafoTarjan.addVertice(2);
-        grafoTarjan.addVertice(3);
-        grafoTarjan.addVertice(4);
-        grafoTarjan.addVertice(5);
+        GrafoNaoPonderado grafoTarjan = new GrafoNaoPonderado("ponteTarjan", 5);
         grafoTarjan.addAresta(1, 0);
         grafoTarjan.addAresta(0, 2);
         grafoTarjan.addAresta(2, 1);
@@ -187,29 +181,33 @@ public class App {
         System.out.println("\n====================================================================\n");
         System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan 2:\n");
 
-        GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2");
-   
-        for(int i = 1; i <= 9; i++) {
-            grafoTarjan2.addVertice(i);
-        }
+        GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2", 15);
         
-        grafoTarjan2.addAresta(1, 2);
-        grafoTarjan2.addAresta(1, 3);
+        grafoTarjan2.addAresta(0, 1);
 
         grafoTarjan2.addAresta(2, 3);
-        grafoTarjan2.addAresta(2, 7);
-
-        grafoTarjan2.addAresta(3, 4);
-        grafoTarjan2.addAresta(3, 7);
+        grafoTarjan2.addAresta(2, 6);
 
         grafoTarjan2.addAresta(4, 5);
         grafoTarjan2.addAresta(4, 8);
-
-        grafoTarjan2.addAresta(5, 9);
+        grafoTarjan2.addAresta(4, 9);
 
         grafoTarjan2.addAresta(6, 7);
 
         grafoTarjan2.addAresta(8, 9);
+        grafoTarjan2.addAresta(8, 13);
+        
+        grafoTarjan2.addAresta(9, 13);
+        grafoTarjan2.addAresta(9, 10);
+
+        grafoTarjan2.addAresta(10, 11);
+        grafoTarjan2.addAresta(10, 14);
+
+        grafoTarjan2.addAresta(11, 15);
+
+        grafoTarjan2.addAresta(12, 13);
+
+        grafoTarjan2.addAresta(14, 15);
 
         Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
 
@@ -217,11 +215,13 @@ public class App {
 
         System.out.println("\n");
 
-        boolean ponte2 = grafoTarjan2.ePonte(3, 4);
-        System.out.println("O vértice 3-4 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(6, 7);
-        System.out.println("O vértice 6-7 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(2, 7);
-        System.out.println("O vértice 2-7 é ponte? - " + ponte2);
+        boolean ponte2 = grafoTarjan2.ePonte(0, 1);
+        System.out.println("O vértice 0-1 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(12, 13);
+        System.out.println("O vértice 12-13 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(9, 10);
+        System.out.println("O vértice 9-10 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(10, 11);
+        System.out.println("O vértice 10-11 é ponte? - " + ponte2);
     }
 }

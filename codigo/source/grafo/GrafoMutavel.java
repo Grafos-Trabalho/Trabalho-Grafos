@@ -10,6 +10,10 @@ public abstract class GrafoMutavel extends Grafo {
     public GrafoMutavel(String nome) {
         super(nome);
     }
+
+    public GrafoMutavel(String nome, int tam) {
+        super(nome, tam);
+    }
     // #endregion
 
     // #region boolean Vertice

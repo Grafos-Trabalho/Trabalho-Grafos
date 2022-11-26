@@ -9,6 +9,10 @@ public class GrafoPonderadoRotulado extends GrafoMutavel {
     public GrafoPonderadoRotulado(String nome) {
         super(nome);
     }
+
+    public GrafoPonderadoRotulado(String nome, int tam) {
+        super(nome, tam);
+    }
     // #endregion
 
     // #region boolean Aresta

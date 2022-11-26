@@ -55,4 +55,8 @@ public class Lista<T> {
     public T getLast() {
         return this.data.getLast();
     }
+
+    public void removeAll() {
+        this.data.removeAll(data);
+    }
 }
