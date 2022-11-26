@@ -1,5 +1,4 @@
 package source;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
@@ -13,8 +12,8 @@ public class Lista<T> {
         return this.data.add(newElement);
     }
 
-    public T find(int element) {
-        return this.data.get(element);
+    public T find(int index) {
+        return this.data.get(index);
     }
 
     public boolean remove(T element) {
@@ -47,5 +46,13 @@ public class Lista<T> {
 
     public Stream<T> stream() {
         return this.data.stream();
+    }
+
+    public T getFirt() {
+        return this.data.getFirst();
+    }
+
+    public T getLast() {
+        return this.data.getLast();
     }
 }

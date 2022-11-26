@@ -16,7 +16,7 @@ public abstract class Grafo implements Cloneable {
 
     public final String nome;
     protected ABB<Vertice> vertices;
-    private int time;
+    Lista<Aresta> bridges;
     // #endregion
 
     // #region Construtor
@@ -26,8 +26,8 @@ public abstract class Grafo implements Cloneable {
      */
     public Grafo(String nome) {
         this.nome = nome;
-        this.vertices = new ABB<>();
-        time = 0;
+        this.vertices = new ABB<Vertice>();
+        this.bridges = new Lista<Aresta>();
     }
     // #endregion
 
@@ -449,51 +449,36 @@ public abstract class Grafo implements Cloneable {
     }
 
     public Lista<Aresta> tarjan() {
-        return criticalConnections(this.vertices.size());
+        this.BR();
+        return bridges;
     }
 
-    private static void DFS(Vertice w, int[] disc, int[] low, Lista<Aresta> bridge, int u, int tempo) {
-        w.limparVisita();
-        disc[u] = low[u] = tempo++;
+    private void dfsBR(Vertice vertice, Lista<Vertice> ancestrais) {
+        Vertice[] adj = new Vertice[vertice.getListaAdjacencia().size()];
+        vertice.getListaAdjacencia().allElements(adj);
 
-        Vertice[] adj = new Vertice[w.getListaAdjacencia().size()];
-        w.getListaAdjacencia().allElements(adj);
-
-        int index = 0;
         for (Vertice verticeAdj : adj) {
-            if (disc[index] == -1) {
-                verticeAdj.setPai(w);
-                DFS(verticeAdj, disc, low, bridge, index, tempo);
-                low[u] = Math.min(low[u], low[index]);
+            if (!vertice.foiVisitado()) {
+                dfsBR(verticeAdj, ancestrais);
 
-                if (low[index] > disc[u]) {
-                    bridge.add(w.existeAresta(verticeAdj.getId()));
+                if (this.ePonte(vertice.getId(), verticeAdj.getId())) {
+                    this.bridges.add(vertice.existeAresta(verticeAdj.getId()));
                 }
-            } else if (!verticeAdj.equals(w.getPai()))
-                low[u] = Math.min(low[u], disc[index]);
 
-            index++;
+                vertice.setPai(verticeAdj);
+                ancestrais.add(verticeAdj);
+            } else
+                vertice.setPai(ancestrais.getFirt());
         }
     }
 
-    private Lista<Aresta> criticalConnections(int V) {
-        int[] disc, low;
-        Lista<Aresta> bridge = new Lista<Aresta>();
+    private void BR() {
+        Lista<Vertice> ancestrais = new Lista<Vertice>();
 
-        disc = new int[V];
-        low = new int[V];
-
-        for (int i = 0; i < V; i++) {
-            disc[i] = -1;
-            low[i] = -1;
-        }
-
-        for (int i = 0; i < V; ++i) {
-            if (disc[i] == -1) {
-                DFS(this.getAllVertices()[i], disc, low, bridge, i, 0);
+        for (Vertice verticeOrigem : this.getAllVertices()) {
+            if (!verticeOrigem.foiVisitado()) {
+                dfsBR(verticeOrigem, ancestrais);
             }
         }
-
-        return bridge;
     }
 }

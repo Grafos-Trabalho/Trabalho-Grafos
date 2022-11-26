@@ -173,8 +173,7 @@ public class App {
         grafoTarjan.addAresta(0, 3);
         grafoTarjan.addAresta(3, 4);
         grafoTarjan.addAresta(0, 5);
-        Lista<Aresta> arestas = new Lista<Aresta>();
-        arestas = grafoTarjan.tarjan();
+        Lista<Aresta> arestas = grafoTarjan.tarjan();
 
         arestas.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
 
@@ -185,5 +184,44 @@ public class App {
         boolean ponte = grafoTarjan.ePonte(3, 4);
         System.out.println("O vértice 3-4 é ponte? - " + ponte);
 
+        System.out.println("\n====================================================================\n");
+        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan 2:\n");
+
+        GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2");
+   
+        for(int i = 1; i <= 9; i++) {
+            grafoTarjan2.addVertice(i);
+        }
+        
+        grafoTarjan2.addAresta(1, 2);
+        grafoTarjan2.addAresta(1, 3);
+
+        grafoTarjan2.addAresta(2, 3);
+        grafoTarjan2.addAresta(2, 7);
+
+        grafoTarjan2.addAresta(3, 4);
+        grafoTarjan2.addAresta(3, 7);
+
+        grafoTarjan2.addAresta(4, 5);
+        grafoTarjan2.addAresta(4, 8);
+
+        grafoTarjan2.addAresta(5, 9);
+
+        grafoTarjan2.addAresta(6, 7);
+
+        grafoTarjan2.addAresta(8, 9);
+
+        Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
+
+        arestasTarjan2.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
+
+        System.out.println("\n");
+
+        boolean ponte2 = grafoTarjan2.ePonte(3, 4);
+        System.out.println("O vértice 3-4 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(6, 7);
+        System.out.println("O vértice 6-7 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(2, 7);
+        System.out.println("O vértice 2-7 é ponte? - " + ponte2);
     }
 }
