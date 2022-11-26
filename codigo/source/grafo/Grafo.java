@@ -194,12 +194,13 @@ public abstract class Grafo implements Cloneable {
     }
 
     public boolean removeAresta(int origem, int destino) {
-        Vertice saida = this.existeVertice(origem);
-        Vertice chegada = this.existeVertice(destino);
+        Vertice verticeOrigem = this.existeVertice(origem);
+        Vertice verticeDestino = this.existeVertice(destino);
 
-        if (saida != null && chegada != null) {
-            saida.removeAresta(destino);
-            chegada.removeAresta(origem);
+        if (verticeOrigem != null && verticeDestino != null) {
+            verticeOrigem.removeAresta(destino);
+            verticeDestino.removeAresta(origem);
+
             return true;
         }
 

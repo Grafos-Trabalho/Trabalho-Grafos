@@ -92,17 +92,10 @@ public class Vertice {
      * @param destino Vértice de destino
     */
     public boolean removeAresta(int destino) {
+
         this.adj.remove(this.findAdj(destino));
-        return this.arestas.remove(getId());
-    }
 
-    public Vertice finAdj(int adj) {
-        return this.findAdj(adj);
-    }
-
-    @Override
-    public String toString() {
-        return this.getId() + "";
+        return this.arestas.remove(destino);
     }
 
     /**

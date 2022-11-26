@@ -214,5 +214,43 @@ public class App {
         System.out.println("O vértice 9-10 é ponte? - " + ponte2);
         ponte2 = grafoTarjan2.ePonte(10, 11);
         System.out.println("O vértice 10-11 é ponte? - " + ponte2);
+
+        System.out.println("\n====================================================================\n");
+        System.out.println("Teste remoção de aresta:\n");
+
+        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado25", 7);
+        
+        grafoNaoPonderado25.addAresta(0, 1);
+        grafoNaoPonderado25.addAresta(0, 2);
+
+        grafoNaoPonderado25.addAresta(1, 2);
+        grafoNaoPonderado25.addAresta(1, 4);
+        grafoNaoPonderado25.addAresta(1, 3);
+
+        grafoNaoPonderado25.addAresta(2, 3);
+        grafoNaoPonderado25.addAresta(2, 5);
+
+        grafoNaoPonderado25.addAresta(3, 4);
+        grafoNaoPonderado25.addAresta(3, 5);
+        
+        grafoNaoPonderado25.addAresta(4, 5);
+        grafoNaoPonderado25.addAresta(4, 6);
+
+        grafoNaoPonderado25.addAresta(5, 6);
+
+        System.out.println("Antes: ");
+        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
+            System.out.print(fodase.getId() + " ");
+        }
+        System.out.println("\n");
+
+
+        System.out.println(grafoNaoPonderado25.removeAresta(0, 1));
+        
+
+        System.out.println("\nDepois: ");
+        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
+            System.out.print(fodase.getId() + " ");
+        }
     }
 }
