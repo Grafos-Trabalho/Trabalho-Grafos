@@ -1,11 +1,7 @@
 package app;
 
-import source.Algorithms;
 import source.Lista;
 import source.grafo.*;
-
-import java.util.*;
-import java.util.Random;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -188,7 +184,6 @@ public class App {
         grafoTarjan2.addAresta(2, 3);
         grafoTarjan2.addAresta(2, 6);
 
-        grafoTarjan2.addAresta(4, 5);
         grafoTarjan2.addAresta(4, 8);
         grafoTarjan2.addAresta(4, 9);
 
