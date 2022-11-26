@@ -189,27 +189,27 @@ public class App {
 
         GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2");
    
-        for(int i = 1; i <= 9; i++) {
+        for(int i = 0; i < 9; i++) {
             grafoTarjan2.addVertice(i);
         }
         
+        grafoTarjan2.addAresta(0, 2);
+        grafoTarjan2.addAresta(0, 1);
+
         grafoTarjan2.addAresta(1, 2);
-        grafoTarjan2.addAresta(1, 3);
+        grafoTarjan2.addAresta(1, 6);
 
         grafoTarjan2.addAresta(2, 3);
-        grafoTarjan2.addAresta(2, 7);
+        grafoTarjan2.addAresta(2, 6);
 
         grafoTarjan2.addAresta(3, 4);
         grafoTarjan2.addAresta(3, 7);
 
-        grafoTarjan2.addAresta(4, 5);
         grafoTarjan2.addAresta(4, 8);
 
-        grafoTarjan2.addAresta(5, 9);
+        grafoTarjan2.addAresta(5, 6);
 
-        grafoTarjan2.addAresta(6, 7);
-
-        grafoTarjan2.addAresta(8, 9);
+        grafoTarjan2.addAresta(7, 8);
 
         Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
 
@@ -217,11 +217,11 @@ public class App {
 
         System.out.println("\n");
 
-        boolean ponte2 = grafoTarjan2.ePonte(3, 4);
-        System.out.println("O vértice 3-4 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(6, 7);
-        System.out.println("O vértice 6-7 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(2, 7);
-        System.out.println("O vértice 2-7 é ponte? - " + ponte2);
+        boolean ponte2 = grafoTarjan2.ePonte(2, 3);
+        System.out.println("O vértice 2-3 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(5, 6);
+        System.out.println("O vértice 5-6 é ponte? - " + ponte2);
+        ponte2 = grafoTarjan2.ePonte(7, 8);
+        System.out.println("O vértice 7-8 é ponte? - " + ponte2);
     }
 }
