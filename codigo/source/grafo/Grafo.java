@@ -206,10 +206,6 @@ public abstract class Grafo implements Cloneable {
         return false;
     }
 
-    public Vertice find(int find, int adj) {
-        return this.vertices.find(find).finAdj(adj);
-    }
-
     /**
      * Método que adiciona uma aresta rotulada
      * 
