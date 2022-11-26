@@ -24,6 +24,7 @@ public class ABB<T> {
 
     public boolean remove(int key) {
         if (this.data.containsKey(key)) {
+            this.data.remove(key);
             return true;
         }
 

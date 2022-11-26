@@ -244,11 +244,10 @@ public class App {
         }
         System.out.println("\n");
 
+        grafoNaoPonderado25.removeAresta(0, 1);
+        grafoNaoPonderado25.removeAresta(0, 4);
 
-        System.out.println(grafoNaoPonderado25.removeAresta(0, 1));
-        
-
-        System.out.println("\nDepois: ");
+        System.out.println("Depois: ");
         for(Vertice fodase : grafoNaoPonderado25.fleury()) {
             System.out.print(fodase.getId() + " ");
         }
