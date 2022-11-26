@@ -395,13 +395,15 @@ public abstract class Grafo implements Cloneable {
         }
     }
 
-    Vertice select;
+  Vertice select;
     Vertice ultimo;
 
     public List<Vertice> fleury() {
         Boolean euleriano = true;
         ABB<Vertice> grafoaux = vertices;
         List<Vertice> caminho = new ArrayList<Vertice>();
+       
+       
         int contador = 0;
         for (Vertice selecionado : grafoaux.allElements(getAllVertices())) {
             if ((selecionado.getGrau() % 2) != 0) {
@@ -421,29 +423,52 @@ public abstract class Grafo implements Cloneable {
                 }
             }
         }
-        if (select == null) {
-            select = this.getVertice(1);
-        }
+       
+        select = this.getVertice(0);
+        
+
         int controlador = 0;
         if (euleriano) {
-            Vertice selecionado = select;
-            caminho.add(selecionado);
-            while (this.tamanho() - this.vertices.size() >= controlador) {
-                for (Aresta arestaSelecionada : selecionado.getAllArestas()) {
-                    if (ePonte(selecionado.getId(), arestaSelecionada.getDestino())) {
-                        selecionado = grafoaux.find(arestaSelecionada.getDestino());
-                        caminho.add(selecionado);
-                        arestaSelecionada.foiVisitada();
-                        euleriano = false;
-                        // lançar excessão
-                    } else {
-                        selecionado = grafoaux.find(arestaSelecionada.getDestino());
-                        selecionado.getAllArestas()[0].foiVisitada();
-                        caminho.add(selecionado);
-                    }
-                    controlador++;
-                }
+            Grafo teste = new Grafo("nada") {
 
+                @Override
+                public Grafo subGrafo(Lista<Vertice> vertices) throws Exception {
+                    // TODO Auto-generated method stub
+                    return null;
+                }
+                
+            };
+            
+                try {
+                    teste = (Grafo) this.clone();
+                } catch (CloneNotSupportedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+            Vertice selecionado = this.getVertice(0);
+            
+            while (teste.getAllArestas().size() != 0) {
+                for (Aresta arestaSelecionada : selecionado.getAllArestas()) {                          
+                    if (teste.ePonte(selecionado.getId(), arestaSelecionada.getDestino()) && arestaSelecionada.getDestino() == selecionado.getAllArestas()[selecionado.getAllArestas().length - 1].getDestino()) {
+                        Vertice aux = teste.getVertice(arestaSelecionada.getDestino());
+                            caminho.add(selecionado);
+                            teste.removeAresta(arestaSelecionada.getOrigem(), arestaSelecionada.getDestino());
+                            selecionado = aux;
+
+                        
+                    } else {
+                        if(!teste.ePonte(selecionado.getId(), arestaSelecionada.getDestino())){
+                            Vertice aux = teste.getVertice(arestaSelecionada.getDestino());
+                            caminho.add(selecionado);
+                            teste.removeAresta(arestaSelecionada.getOrigem(), arestaSelecionada.getDestino());
+                            selecionado = aux;
+                        }
+                        
+                    }
+                    
+                }
+                controlador++;
                 ultimo = selecionado;
             }
         } else {
@@ -451,17 +476,10 @@ public abstract class Grafo implements Cloneable {
             // lançar excessão
         }
 
-        if (ultimo.getId() == select.getId()) {
-            euleriano = true;
-            // lançar excessão
-        }
-
-        if (euleriano) {
-            return caminho;
-        }
 
         return caminho;
     }
+
 
     public Lista<Aresta> tarjan() {
         this.bridges.removeAll();
