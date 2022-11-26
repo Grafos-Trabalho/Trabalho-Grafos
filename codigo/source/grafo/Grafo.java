@@ -180,6 +180,7 @@ public abstract class Grafo implements Cloneable {
      * @return false Se a aresta não foi adicionada
      */
     public boolean addAresta(int origem, int destino, int peso) {
+
         Vertice saida = this.existeVertice(origem);
         Vertice chegada = this.existeVertice(destino);
 
@@ -203,6 +204,10 @@ public abstract class Grafo implements Cloneable {
         }
 
         return false;
+    }
+
+    public Vertice find(int find, int adj) {
+        return this.vertices.find(find).finAdj(adj);
     }
 
     /**

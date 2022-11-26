@@ -27,10 +27,10 @@ public final class Algorithms {
 
         if (oddCount == 0) {
             path.add(Grafo.getVertice(0));
-            getEulerPath(Grafo, path, path.find(0));
+            getEulerPath(Grafo, path, path.getFirt());
         } else if (oddCount == 2) {
             path.add(oddVertices.get(0));
-            getEulerPath(Grafo, path, path.find(0));
+            getEulerPath(Grafo, path, path.getFirt());
         } else {
             throw new IllegalStateException("Euler properties infringed.");
         }

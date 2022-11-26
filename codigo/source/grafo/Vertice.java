@@ -1,5 +1,8 @@
 package source.grafo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import source.ABB;
 import source.Lista;
 
@@ -92,8 +95,17 @@ public class Vertice {
      * @param destino Vértice de destino
     */
     public boolean removeAresta(int destino) {
-        this.adj.remove(adj.find(destino));
-        return this.arestas.remove(destino);
+        this.adj.remove(this.findAdj(destino));
+        return this.arestas.remove(getId());
+    }
+
+    public Vertice finAdj(int adj) {
+        return this.findAdj(adj);
+    }
+
+    @Override
+    public String toString() {
+        return this.getId() + "";
     }
 
     /**
@@ -144,5 +156,16 @@ public class Vertice {
 
     public void setRotulo(String rotulo) {
         this.rotulo = rotulo;
+    }
+
+    private Vertice findAdj(int vertice) {
+        Vertice[] adj = new Vertice[this.adj.size()];
+
+        for(Vertice v : this.getListaAdjacencia().allElements(adj)) {
+            if(v.getId() == vertice){
+                return v;
+            }
+        }
+        return null;
     }
 }

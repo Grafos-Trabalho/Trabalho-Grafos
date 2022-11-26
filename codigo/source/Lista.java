@@ -11,18 +11,7 @@ public class Lista<T> {
     public boolean add(T newElement) {
         return this.data.add(newElement);
     }
-
-    public T find(int index) {
-        int i = 0;
-
-        for(T element : data) {
-            if(element == this.data.get(i++))
-                return element;
-        }
-
-        return null;
-    }
-
+    
     public boolean remove(T element) {
         return this.data.remove(element);
     }
