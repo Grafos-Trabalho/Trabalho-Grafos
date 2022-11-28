@@ -485,4 +485,9 @@ public abstract class Grafo implements Cloneable {
         this.bridges.removeAll();
         return Algorithms.BR(this, this.getAllVertices(), this.bridges);
     }
+
+
+
+
+    
 }
