@@ -1,59 +1,15 @@
 package app;
 
+import java.util.List;
+
 import source.Lista;
 import source.grafo.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Grafo não ponderado:");
-
-        GrafoNaoPonderado grafoNaoPonderado = new GrafoNaoPonderado("grafoNaoPonderado", 10);
-
-        int j = 2;
-        for (int i = 0; i < 10; i++) {
-            grafoNaoPonderado.addAresta(i, j);
-            grafoNaoPonderado.addAresta(j + 2, j);
-        }
-        grafoNaoPonderado.addAresta(1, 5);
-        grafoNaoPonderado.addAresta(4, 7);
-
-        System.out.println("Ordem do grafo não ponderado: " + grafoNaoPonderado.ordem());
-        System.out.println("Tamanho do grafo não ponderado: " + grafoNaoPonderado.tamanho());
-
-        grafoNaoPonderado.salvar();
-
-        GrafoNaoPonderado grafoNaoPonderado2 = new GrafoNaoPonderado("grafoNaoPonderado2");
-        // grafoNaoPonderado2.carregar("grafoNaoPonderado");
-
-        System.out.println("Ordem do grafo não ponderado 2: " + grafoNaoPonderado2.ordem());
-        System.out.println("Tamanho do grafo não ponderado 2: " + grafoNaoPonderado2.tamanho());
 
         System.out.println("\n====================================================================\n");
-        System.out.println("Grafo ponderado:");
-
-        GrafoPonderadoRotulado GrafoPonderadoRotulado = new GrafoPonderadoRotulado("GrafoPonderadoRotulado", 40);
-
-        j = 2;
-        for (int i = 0; i < 10; i++) {
-            grafoNaoPonderado.addAresta(i, j, i + j);
-            grafoNaoPonderado.addAresta(j + 2, j, j - i);
-        }
-        grafoNaoPonderado.addAresta(1, 5, 3);
-        grafoNaoPonderado.addAresta(4, 7, 1);
-
-        System.out.println("Ordem do grafo ponderado: " + GrafoPonderadoRotulado.ordem());
-        System.out.println("Tamanho do grafo ponderado: " + GrafoPonderadoRotulado.tamanho());
-        GrafoPonderadoRotulado.salvar();
-
-        GrafoPonderadoRotulado grafoPonderado2 = new GrafoPonderadoRotulado("grafoPonderado2");
-        // grafoPonderado2.carregar("grafoPonderado");
-
-        System.out.println();
-        System.out.println("Ordem do grafo ponderado 2: " + grafoPonderado2.ordem());
-        System.out.println("Tamanho do grafo ponderado 2: " + grafoPonderado2.tamanho());
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Teste do gráfico completo:");
+        System.out.println("Grafo completo:");
 
         GrafoCompleto completo = new GrafoCompleto("completo", 30);
         System.out.println("Tamanho do grafo: " + completo.tamanho());
@@ -77,24 +33,6 @@ public class App {
         visitados.allElements(visitadosArray);
 
         for (Vertice vertice : visitadosArray) {
-            if (vertice != null) {
-                System.out.println(vertice.getId());
-            }
-        }
-        System.out.println("\n====================================================================\n");
-        GrafoNaoPonderado grafoCaminho = new GrafoNaoPonderado("Grafo para caminho");
-        grafoCaminho.addVertice(1);
-        grafoCaminho.addVertice(2);
-        grafoCaminho.addVertice(3);
-        grafoCaminho.addVertice(4);
-        grafoCaminho.addVertice(5);
-        grafoCaminho.addAresta(1, 3);
-        grafoCaminho.addAresta(1, 2);
-        grafoCaminho.addAresta(3, 5);
-        System.out.println("Encontrar Caminho:");
-        Vertice[] listaCaminho = new Vertice[100];
-        listaCaminho = grafoCaminho.encontrarCaminho(1, 3);
-        for (Vertice vertice : listaCaminho) {
             if (vertice != null) {
                 System.out.println(vertice.getId());
             }
@@ -148,7 +86,7 @@ public class App {
         System.out.println("\n");
 
         System.out.println("\n====================================================================\n");
-        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan:\n");
+        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de matriz:\n");
 
         GrafoNaoPonderado grafoTarjan = new GrafoNaoPonderado("ponteTarjan", 5);
         grafoTarjan.addAresta(1, 0);
@@ -157,9 +95,6 @@ public class App {
         grafoTarjan.addAresta(0, 3);
         grafoTarjan.addAresta(3, 4);
         grafoTarjan.addAresta(0, 5);
-        Lista<Aresta> arestas = grafoTarjan.tarjan();
-
-        arestas.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
 
         grafoTarjan.salvar();
 
@@ -169,87 +104,41 @@ public class App {
         System.out.println("O vértice 3-4 é ponte? - " + ponte);
 
         System.out.println("\n====================================================================\n");
-        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan 2:\n");
+        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan:\n");
 
-        GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2", 15);
+        GrafoNaoPonderado grafoNaoPonderadoPonte = new GrafoNaoPonderado("GrafoPonte");
         
-        grafoTarjan2.addAresta(0, 1);
+        grafoNaoPonderadoPonte.addVertice(0);
+        grafoNaoPonderadoPonte.addVertice(1);
+        grafoNaoPonderadoPonte.addVertice(2);
+        grafoNaoPonderadoPonte.addVertice(3);
+        grafoNaoPonderadoPonte.addVertice(4);
+        grafoNaoPonderadoPonte.addVertice(5);
+        grafoNaoPonderadoPonte.addVertice(6);
+        grafoNaoPonderadoPonte.addVertice(7);
+        grafoNaoPonderadoPonte.addVertice(8);
+        grafoNaoPonderadoPonte.addVertice(9);
 
-        grafoTarjan2.addAresta(2, 3);
-        grafoTarjan2.addAresta(2, 6);
+        grafoNaoPonderadoPonte.addAresta(0, 1);
+        grafoNaoPonderadoPonte.addAresta(0, 2);
+        grafoNaoPonderadoPonte.addAresta(1, 2);
+        grafoNaoPonderadoPonte.addAresta(1, 9);
+        grafoNaoPonderadoPonte.addAresta(1, 3);
+        grafoNaoPonderadoPonte.addAresta(2, 8);
+        grafoNaoPonderadoPonte.addAresta(3, 6);
+        grafoNaoPonderadoPonte.addAresta(3, 5);
+        grafoNaoPonderadoPonte.addAresta(3, 4);
+        grafoNaoPonderadoPonte.addAresta(4, 5);
+        grafoNaoPonderadoPonte.addAresta(5, 6);
+        grafoNaoPonderadoPonte.addAresta(7, 8);
 
-        grafoTarjan2.addAresta(4, 8);
-        grafoTarjan2.addAresta(4, 9);
+        Lista<Aresta> arestasTarjan2 = grafoNaoPonderadoPonte.tarjan();
 
-        grafoTarjan2.addAresta(6, 7);
+        System.out.println("Pontes identificadas:\n");
 
-        grafoTarjan2.addAresta(8, 9);
-        grafoTarjan2.addAresta(8, 13);
-        
-        grafoTarjan2.addAresta(9, 13);
-        grafoTarjan2.addAresta(9, 10);
+        arestasTarjan2.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " - " + aresta.getDestino()));
 
-        grafoTarjan2.addAresta(10, 11);
-        grafoTarjan2.addAresta(10, 14);
-
-        grafoTarjan2.addAresta(11, 15);
-
-        grafoTarjan2.addAresta(12, 13);
-
-        grafoTarjan2.addAresta(14, 15);
-
-        grafoTarjan2.removeAresta(10, 14);
-
-        Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
-
-        arestasTarjan2.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
-
-        System.out.println("\n");
-
-        boolean ponte2 = grafoTarjan2.ePonte(0, 1);
-        System.out.println("O vértice 0-1 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(12, 13);
-        System.out.println("O vértice 12-13 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(9, 10);
-        System.out.println("O vértice 9-10 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(10, 11);
-        System.out.println("O vértice 10-11 é ponte? - " + ponte2);
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Teste remoção de aresta:\n");
-
-        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado25", 7);
-        
-        grafoNaoPonderado25.addAresta(0, 1);
-        grafoNaoPonderado25.addAresta(0, 2);
-
-        grafoNaoPonderado25.addAresta(1, 2);
-        grafoNaoPonderado25.addAresta(1, 4);
-        grafoNaoPonderado25.addAresta(1, 3);
-
-        grafoNaoPonderado25.addAresta(2, 3);
-        grafoNaoPonderado25.addAresta(2, 5);
-
-        grafoNaoPonderado25.addAresta(3, 4);
-        grafoNaoPonderado25.addAresta(3, 5);
-        
-        grafoNaoPonderado25.addAresta(4, 5);
-        grafoNaoPonderado25.addAresta(4, 6);
-
-        grafoNaoPonderado25.addAresta(5, 6);
-
-        System.out.println("Antes: ");
-        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
-            System.out.print(fodase.getId() + " ");
-        }
-        System.out.println("\n");
-
-        grafoNaoPonderado25.removeAresta(0, 1);
-        grafoNaoPonderado25.removeAresta(0, 4);
-
-        System.out.println("Depois: ");
-        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
-            System.out.print(fodase.getId() + " ");
-        }
     }
+
+    
 }

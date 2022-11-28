@@ -321,7 +321,7 @@ public abstract class Grafo implements Cloneable {
 
     // }
 
-    public int[][] listaAdjacencia() {
+    public int[][] matrizAdjacencia() {
         Vertice[] array = new Vertice[vertices.size()];
         vertices.allElements(array);
         int[][] matriz = new int[vertices.size() + 1][vertices.size() + 1];
@@ -353,7 +353,7 @@ public abstract class Grafo implements Cloneable {
 
     public boolean ePonte(int origem, int destino) {
         Vertice[] listaVertices = this.getAllVertices();
-        int[][] matriz = this.listaAdjacencia();
+        int[][] matriz = this.matrizAdjacencia();
         for (int i = 0; i < listaVertices.length; i++) {
             for (int j = 0; j < listaVertices.length; j++) {
                 if (i + 1 == origem + 1 && j + 1 == destino + 1) {
@@ -433,7 +433,6 @@ public abstract class Grafo implements Cloneable {
 
                 @Override
                 public Grafo subGrafo(Lista<Vertice> vertices) throws Exception {
-                    // TODO Auto-generated method stub
                     return null;
                 }
                 
@@ -485,9 +484,4 @@ public abstract class Grafo implements Cloneable {
         this.bridges.removeAll();
         return Algorithms.BR(this, this.getAllVertices(), this.bridges);
     }
-
-
-
-
-    
 }
