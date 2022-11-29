@@ -398,89 +398,111 @@ public abstract class Grafo implements Cloneable {
   Vertice select;
     Vertice ultimo;
 
-    public List<Vertice> fleury() {
-        Boolean euleriano = true;
-        ABB<Vertice> grafoaux = vertices;
-        List<Vertice> caminho = new ArrayList<Vertice>();
-       
-       
-        int contador = 0;
-        for (Vertice selecionado : grafoaux.allElements(getAllVertices())) {
-            if ((selecionado.getGrau() % 2) != 0) {
-                contador++;
-            }
-        }
-        if (contador >= 3) {
-            euleriano = false;
-        }
+    
+    public List<Vertice> fleury(){
+        int controle = 0;
+     List<Vertice> caminho = new ArrayList<Vertice>();
+     int[][] matriz = new int[vertices.size() + 1][vertices.size() + 1];
+     Vertice selecionado = this.existeVertice(0);
+     Vertice primeiro = this.existeVertice(0);
+     matriz = matrizFormatada(this.listaAdjacencia());
+     Grafo teste = new Grafo("nada") {
 
-        Vertice[] array = grafoaux.allElements(getAllVertices());
-
-        for (Vertice selecionado1 : array) {
-            {
-                if (selecionado1.getGrau() % 2 != 0) {
-                    select = selecionado1;
-                }
-            }
+        @Override
+        public Grafo subGrafo(Lista<Vertice> vertices) throws Exception {
+            // TODO Auto-generated method stub
+            return null;
         }
-       
-        select = this.getVertice(0);
         
-
-        int controlador = 0;
-        if (euleriano) {
-            Grafo teste = new Grafo("nada") {
-
-                @Override
-                public Grafo subGrafo(Lista<Vertice> vertices) throws Exception {
-                    // TODO Auto-generated method stub
-                    return null;
-                }
-                
-            };
-            
-                try {
-                    teste = (Grafo) this.clone();
-                } catch (CloneNotSupportedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                
-            Vertice selecionado = this.getVertice(0);
-            
-            while (teste.getAllArestas().size() != 0) {
-                for (Aresta arestaSelecionada : selecionado.getAllArestas()) {                          
-                    if (teste.ePonte(selecionado.getId(), arestaSelecionada.getDestino()) && arestaSelecionada.getDestino() == selecionado.getAllArestas()[selecionado.getAllArestas().length - 1].getDestino()) {
-                        Vertice aux = teste.getVertice(arestaSelecionada.getDestino());
-                            caminho.add(selecionado);
-                            teste.removeAresta(arestaSelecionada.getOrigem(), arestaSelecionada.getDestino());
-                            selecionado = aux;
-
-                        
-                    } else {
-                        if(!teste.ePonte(selecionado.getId(), arestaSelecionada.getDestino())){
-                            Vertice aux = teste.getVertice(arestaSelecionada.getDestino());
-                            caminho.add(selecionado);
-                            teste.removeAresta(arestaSelecionada.getOrigem(), arestaSelecionada.getDestino());
-                            selecionado = aux;
-                        }
-                        
+    };
+    
+        try {
+            teste = (Grafo) this.clone();
+        } catch (CloneNotSupportedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        while(!this.matrizVazia(matriz)){
+            if(existeAresta(matriz, selecionado.getId(),controle) != null){
+                Aresta atual = existeAresta(matriz, selecionado.getId(), controle);
+                if(teste.ePonte(atual.getOrigem(), atual.getDestino()) && quantidadeAresta(matriz, atual.getOrigem() ) ==controle+1){
+                    caminho.add(selecionado);
+                    Vertice aux = this.existeVertice(atual.getDestino());
+                    matriz[atual.getOrigem()][atual.getDestino()]=0;
+                    matriz[atual.getDestino()][atual.getOrigem()]=0;
+                    teste.removeAresta(atual.getOrigem(), atual.getOrigem());
+                    teste.removeAresta(atual.getDestino(), atual.getOrigem());
+                    selecionado=aux;
+                    controle=0;
+                    if(this.matrizVazia(matriz) && selecionado==primeiro){
+                        caminho.add(primeiro);
                     }
-                    
+                }else{
+                    if(!teste.ePonte(atual.getOrigem(), atual.getDestino()) && teste.existeAresta(atual.getOrigem(),atual.getDestino()) != null){
+                        caminho.add(selecionado);
+                        Vertice aux = this.existeVertice(atual.getDestino());
+                        matriz[atual.getOrigem()][atual.getDestino()]=0;
+                        matriz[atual.getDestino()][atual.getOrigem()]=0;
+                        teste.removeAresta(atual.getOrigem(), atual.getOrigem());
+                        teste.removeAresta(atual.getDestino(), atual.getOrigem());
+                        selecionado=aux;
+                        controle=0;
+                    }else{
+                        controle++;
+                    }
                 }
-                controlador++;
-                ultimo = selecionado;
             }
-        } else {
-
-            // lançar excessão
         }
 
+     return caminho;
+    }
+    
+    
+    private int[][] matrizFormatada(int matriz [][]){
+        int formatada [][] = new int[matriz.length-1][matriz.length-1];
 
-        return caminho;
+        for(int i=1; i<matriz.length;i++){
+            for(int j=1; j<matriz.length; j++){
+                formatada[i-1][j-1] = matriz[i][j];
+            }
+        }
+
+        return formatada;
     }
 
+    public boolean matrizVazia(int [][] matriz){
+        int qtd=0;
+        for(int i=0; i<matriz.length;i++){
+            for(int j=0; j<matriz.length;j++){
+               if(matriz[i][j] !=0){
+                qtd++;
+               }
+            }
+        }
+        return qtd==0;
+    }
 
+    public Aresta existeAresta(int matriz[][],int id, int controle){
+        int teste=0;
+        for(int i=0; i<matriz[id].length;i++){
+               if(matriz[id][i] !=0){
+                if(teste==controle){
+                    return existeAresta(id, i);
+                }
+                teste++;
+               }
+        }
+        return null;
+    }
+    public int quantidadeAresta(int matriz[][],int id){
+        int qtd = 0;
+        for(int i=0; i<matriz[id].length;i++){
+               if(matriz[id][i] !=0){
+                qtd++;
+               }
+        }
+        return qtd;
+    }
     public Lista<Aresta> tarjan() {
         this.bridges.removeAll();
         return Algorithms.BR(this, this.getAllVertices(), this.bridges);
