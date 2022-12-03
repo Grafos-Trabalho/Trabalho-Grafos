@@ -91,11 +91,11 @@ public class Vertice {
      * @param peso Peso da aresta (1 para grafos não ponderados)
      * @param destino Vértice de destino
     */
-    public boolean removeAresta(int destino) {
+    public boolean removeAresta(Vertice destino) {
 
-        this.adj.remove(this.findAdj(destino));
+        this.adj.remove(destino);
 
-        return this.arestas.remove(destino);
+        return this.arestas.remove(destino.getId());
     }
 
     /**
