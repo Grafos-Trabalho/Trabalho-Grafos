@@ -38,41 +38,46 @@ public final class Algorithms {
         return path;
     }
 
-    private static void dfsBR(Grafo grafo, Vertice vertice, Lista<Aresta> bridges, Lista<Vertice> ancestrais) {
+    private static int Time;
+    
+    private static void dfsBR(Vertice vertice, Lista<Aresta> bridges, int[] disc, int[] low, int p) {
+        int u = vertice.getId();
+        low[u] = disc[u] = ++Time;
+
         Vertice[] adj = new Vertice[vertice.getListaAdjacencia().size()];
         vertice.getListaAdjacencia().allElements(adj);
 
-        for (Vertice verticeAdj : adj) {
-            if (!verticeAdj.foiVisitado()) {
-                verticeAdj.visitar();
-                
-                dfsBR(grafo, verticeAdj, bridges, ancestrais);
+        int v;
 
-                if (grafo.ePonte(vertice.getId(), verticeAdj.getId())) {
-                    bridges.add(vertice.existeAresta(verticeAdj.getId()));
-                }
+        for(Vertice verticeAdj : adj) {
+            v = verticeAdj.getId();
 
-                vertice.setPai(verticeAdj);
-                ancestrais.add(verticeAdj);
-            } else
-                vertice.setPai(ancestrais.getFirt());
+            if(v != p) {
+                if (disc[v] == 0) {
+                    dfsBR(verticeAdj, bridges, disc, low, u);
+
+                    if (disc[u] < low[v]) {
+                        bridges.add(vertice.existeAresta(v));
+                    }
+
+                    low[u] = Math.min(low[u], low[v]);
+                } else
+                    low[u] = Math.min(low[u], disc[v]);
+            }
         }
     }
 
-    public static Lista<Aresta> BR(Grafo grafo, Vertice[] allVertices, Lista<Aresta> bridges) {
-        Lista<Vertice> ancestrais;
+    public static Lista<Aresta> BR(Vertice[] allVertices, Lista<Aresta> bridges) {
+        int[] low, disc;
+        low = disc = new int[allVertices.length];
+        Time = 0;
+        int u;
 
         for (Vertice verticeOrigem : allVertices) {
-            verticeOrigem.limparVisita();
-        }
+            u = verticeOrigem.getId();
 
-        for (Vertice verticeOrigem : allVertices) {
-            if (!verticeOrigem.foiVisitado()) {
-                verticeOrigem.visitar();
-                ancestrais = new Lista<Vertice>();
-                ancestrais.add(verticeOrigem);
-
-                dfsBR(grafo, verticeOrigem, bridges, ancestrais);
+            if (disc[u] == 0) {
+                dfsBR(verticeOrigem, bridges, disc, low, u);
             }
         }
 

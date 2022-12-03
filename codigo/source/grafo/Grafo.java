@@ -33,7 +33,7 @@ public abstract class Grafo implements Cloneable {
         this.nome = nome;
         init();
 
-        for(int i = 0; i < tam; i++) {
+        for(int i = 0; i <= tam; i++) {
             this.addVertice(i);
         }
     }
@@ -185,8 +185,8 @@ public abstract class Grafo implements Cloneable {
         Vertice chegada = this.existeVertice(destino);
 
         if (saida != null && chegada != null) {
-            saida.addAresta(destino, peso);
-            chegada.addAresta(origem, peso);
+            saida.addAresta(chegada, peso);
+            chegada.addAresta(saida, peso);
             return true;
         }
 
@@ -222,8 +222,8 @@ public abstract class Grafo implements Cloneable {
         Vertice chegada = this.existeVertice(destino);
 
         if (saida != null && chegada != null) {
-            saida.addAresta(destino, peso, rotulo);
-            chegada.addAresta(origem, peso, rotulo);
+            saida.addAresta(chegada, peso, rotulo);
+            chegada.addAresta(saida, peso, rotulo);
             return true;
         }
 
@@ -516,6 +516,6 @@ public abstract class Grafo implements Cloneable {
 
     public Lista<Aresta> tarjan() {
         this.bridges.removeAll();
-        return Algorithms.BR(this, this.getAllVertices(), this.bridges);
+        return Algorithms.BR(this.getAllVertices(), this.bridges);
     }
 }

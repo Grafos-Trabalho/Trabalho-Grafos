@@ -65,9 +65,9 @@ public class Vertice {
      * 
      * @param destino Vértice de destino
      */
-    public boolean addAresta(int destino) {
-        adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(0, this.getId(), destino));
+    public boolean addAresta(Vertice destino) {
+        adj.add(destino);
+        return this.arestas.add(destino.getId(), new Aresta(0, this.getId(), destino.getId()));
     }
 
     /**
@@ -76,14 +76,14 @@ public class Vertice {
      * @param peso    Peso da aresta (1 para grafos não ponderados)
      * @param destino Vértice de destino
      */
-    public boolean addAresta(int destino, int peso) {
-        this.adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(peso, this.getId(), destino));
+    public boolean addAresta(Vertice destino, int peso) {
+        this.adj.add(destino);
+        return this.arestas.add(destino.getId(), new Aresta(peso, this.getId(), destino.getId()));
     }
 
-    public boolean addAresta(int destino, int peso, String rotulo) {
-        this.adj.add(new Vertice(destino));
-        return this.arestas.add(destino, new Aresta(peso, this.getId(), destino, rotulo));
+    public boolean addAresta(Vertice destino, int peso, String rotulo) {
+        this.adj.add(destino);
+        return this.arestas.add(destino.getId(), new Aresta(peso, this.getId(), destino.getId(), rotulo));
     }
 
     /**
