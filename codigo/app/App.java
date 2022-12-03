@@ -5,55 +5,9 @@ import source.grafo.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Grafo não ponderado:");
-
-        GrafoNaoPonderado grafoNaoPonderado = new GrafoNaoPonderado("grafoNaoPonderado", 10);
-
-        int j = 2;
-        for (int i = 0; i < 10; i++) {
-            grafoNaoPonderado.addAresta(i, j);
-            grafoNaoPonderado.addAresta(j + 2, j);
-        }
-        grafoNaoPonderado.addAresta(1, 5);
-        grafoNaoPonderado.addAresta(4, 7);
-
-        System.out.println("Ordem do grafo não ponderado: " + grafoNaoPonderado.ordem());
-        System.out.println("Tamanho do grafo não ponderado: " + grafoNaoPonderado.tamanho());
-
-        grafoNaoPonderado.salvar();
-
-        GrafoNaoPonderado grafoNaoPonderado2 = new GrafoNaoPonderado("grafoNaoPonderado2");
-        // grafoNaoPonderado2.carregar("grafoNaoPonderado");
-
-        System.out.println("Ordem do grafo não ponderado 2: " + grafoNaoPonderado2.ordem());
-        System.out.println("Tamanho do grafo não ponderado 2: " + grafoNaoPonderado2.tamanho());
 
         System.out.println("\n====================================================================\n");
-        System.out.println("Grafo ponderado:");
-
-        GrafoPonderadoRotulado GrafoPonderadoRotulado = new GrafoPonderadoRotulado("GrafoPonderadoRotulado", 40);
-
-        j = 2;
-        for (int i = 0; i < 10; i++) {
-            grafoNaoPonderado.addAresta(i, j, i + j);
-            grafoNaoPonderado.addAresta(j + 2, j, j - i);
-        }
-        grafoNaoPonderado.addAresta(1, 5, 3);
-        grafoNaoPonderado.addAresta(4, 7, 1);
-
-        System.out.println("Ordem do grafo ponderado: " + GrafoPonderadoRotulado.ordem());
-        System.out.println("Tamanho do grafo ponderado: " + GrafoPonderadoRotulado.tamanho());
-        GrafoPonderadoRotulado.salvar();
-
-        GrafoPonderadoRotulado grafoPonderado2 = new GrafoPonderadoRotulado("grafoPonderado2");
-        // grafoPonderado2.carregar("grafoPonderado");
-
-        System.out.println();
-        System.out.println("Ordem do grafo ponderado 2: " + grafoPonderado2.ordem());
-        System.out.println("Tamanho do grafo ponderado 2: " + grafoPonderado2.tamanho());
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Teste do gráfico completo:");
+        System.out.println("Teste do grafo completo:");
 
         GrafoCompleto completo = new GrafoCompleto("completo", 30);
         System.out.println("Tamanho do grafo: " + completo.tamanho());
@@ -77,24 +31,6 @@ public class App {
         visitados.allElements(visitadosArray);
 
         for (Vertice vertice : visitadosArray) {
-            if (vertice != null) {
-                System.out.println(vertice.getId());
-            }
-        }
-        System.out.println("\n====================================================================\n");
-        GrafoNaoPonderado grafoCaminho = new GrafoNaoPonderado("Grafo para caminho");
-        grafoCaminho.addVertice(1);
-        grafoCaminho.addVertice(2);
-        grafoCaminho.addVertice(3);
-        grafoCaminho.addVertice(4);
-        grafoCaminho.addVertice(5);
-        grafoCaminho.addAresta(1, 3);
-        grafoCaminho.addAresta(1, 2);
-        grafoCaminho.addAresta(3, 5);
-        System.out.println("Encontrar Caminho:");
-        Vertice[] listaCaminho = new Vertice[100];
-        listaCaminho = grafoCaminho.encontrarCaminho(1, 3);
-        for (Vertice vertice : listaCaminho) {
             if (vertice != null) {
                 System.out.println(vertice.getId());
             }
@@ -216,40 +152,90 @@ public class App {
         System.out.println("O vértice 10-11 é ponte? - " + ponte2);
 
         System.out.println("\n====================================================================\n");
-        System.out.println("Teste remoção de aresta:\n");
+        System.out.println("Testando fleury\n");
 
-        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado25", 7);
-        
+        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado");
+        for (int i = 0; i < 7; i++) {
+            grafoNaoPonderado25.addVertice(i);
+        }
+
         grafoNaoPonderado25.addAresta(0, 1);
         grafoNaoPonderado25.addAresta(0, 2);
-
+        
         grafoNaoPonderado25.addAresta(1, 2);
-        grafoNaoPonderado25.addAresta(1, 4);
+        grafoNaoPonderado25.addAresta(1, 5);
         grafoNaoPonderado25.addAresta(1, 3);
 
         grafoNaoPonderado25.addAresta(2, 3);
-        grafoNaoPonderado25.addAresta(2, 5);
+        grafoNaoPonderado25.addAresta(2, 4);
 
         grafoNaoPonderado25.addAresta(3, 4);
         grafoNaoPonderado25.addAresta(3, 5);
+
         
         grafoNaoPonderado25.addAresta(4, 5);
         grafoNaoPonderado25.addAresta(4, 6);
 
         grafoNaoPonderado25.addAresta(5, 6);
 
-        System.out.println("Antes: ");
-        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
-            System.out.print(fodase.getId() + " ");
+        
+        
+        for(Vertice selecionado: grafoNaoPonderado25.fleury()){
+            System.out.println(selecionado.getId());
         }
-        System.out.println("\n");
 
-        grafoNaoPonderado25.removeAresta(0, 1);
-        grafoNaoPonderado25.removeAresta(0, 4);
+        System.out.println("\nSegundo teste fleury: \n");
 
-        System.out.println("Depois: ");
-        for(Vertice fodase : grafoNaoPonderado25.fleury()) {
-            System.out.print(fodase.getId() + " ");
+        GrafoNaoPonderado grafoNaoPonderado23 = new GrafoNaoPonderado("grafoNaoPonderado2");
+        for (int i = 0; i < 6; i++) {
+            grafoNaoPonderado23.addVertice(i);
         }
+        grafoNaoPonderado23.addAresta(0, 1);
+        grafoNaoPonderado23.addAresta(0, 3);
+        grafoNaoPonderado23.addAresta(0, 5);
+        grafoNaoPonderado23.addAresta(0, 4);
+
+        grafoNaoPonderado23.addAresta(1, 2);
+        grafoNaoPonderado23.addAresta(1, 5);
+        grafoNaoPonderado23.addAresta(1, 3);
+
+        grafoNaoPonderado23.addAresta(3, 2);
+        grafoNaoPonderado23.addAresta(3, 4);
+
+    
+        for(Vertice selecionado: grafoNaoPonderado23.fleury()){
+            System.out.println(selecionado.getId());
+        }
+
+        System.out.println("\n====================================================================\n");
+        System.out.println("Teste métodos matriz:\n");
+
+        GrafoNaoPonderado grafoTesteMatriz = new GrafoNaoPonderado("a");
+        int matriz[][] = grafoTesteMatriz.matrizAdjacencia();
+        int matrizFormatada[][] = grafoTesteMatriz.matrizFormatada(matriz);
+        
+        // Testando se a matriz está vazia
+        System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));
+
+        // Adicionando vértices e arestas a matriz
+        grafoTesteMatriz.addVertice(0);
+        grafoTesteMatriz.addVertice(1);
+        grafoTesteMatriz.addVertice(2);
+        grafoTesteMatriz.addAresta(0,1);
+        grafoTesteMatriz.addAresta(0,2);
+        grafoTesteMatriz.addAresta(1,2);
+        matriz = grafoTesteMatriz.matrizAdjacencia();
+        matrizFormatada = grafoTesteMatriz.matrizFormatada(matriz);
+
+        // Testando se a matriz foi preenchida
+        System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));
+
+        // Removendo arestas da matriz
+        grafoTesteMatriz.removerArestaMatriz(matrizFormatada, 0, 1);
+        grafoTesteMatriz.removerArestaMatriz(matrizFormatada, 0, 2);
+        grafoTesteMatriz.removerArestaMatriz(matrizFormatada, 1, 2);
+
+        // Testando se a matriz ficou vazia
+        System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));
     }
 }

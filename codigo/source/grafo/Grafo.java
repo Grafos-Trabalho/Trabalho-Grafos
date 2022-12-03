@@ -395,18 +395,18 @@ public abstract class Grafo implements Cloneable {
         }
     }
 
-  Vertice select;
+    Vertice select;
     Vertice ultimo;
 
     
     public List<Vertice> fleury(){
         int controle = 0;
-     List<Vertice> caminho = new ArrayList<Vertice>();
-     int[][] matriz = new int[vertices.size() + 1][vertices.size() + 1];
-     Vertice selecionado = this.existeVertice(0);
-     Vertice primeiro = this.existeVertice(0);
-     matriz = matrizFormatada(this.matrizAdjacencia());
-     Grafo teste = new Grafo("nada") {
+        List<Vertice> caminho = new ArrayList<Vertice>();
+        int[][] matriz = new int[vertices.size() + 1][vertices.size() + 1];
+        Vertice selecionado = this.existeVertice(0);
+        Vertice primeiro = this.existeVertice(0);
+        matriz = matrizFormatada(this.matrizAdjacencia());
+        Grafo teste = new Grafo("nada") {
 
         @Override
         public Grafo subGrafo(Lista<Vertice> vertices) throws Exception {
@@ -414,18 +414,17 @@ public abstract class Grafo implements Cloneable {
             return null;
         }
         
-    };
+        };
     
         try {
             teste = (Grafo) this.clone();
         } catch (CloneNotSupportedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         while(!this.matrizVazia(matriz)){
-            if(existeAresta(matriz, selecionado.getId(),controle) != null){
-                Aresta atual = existeAresta(matriz, selecionado.getId(), controle);
-                if(teste.ePonte(atual.getOrigem(), atual.getDestino()) && quantidadeAresta(matriz, atual.getOrigem() ) ==controle+1){
+            if(arestaRestanteVerticeMatriz(matriz, selecionado.getId(),controle) != null){
+                Aresta atual = arestaRestanteVerticeMatriz(matriz, selecionado.getId(), controle);
+                if(teste.ePonte(atual.getOrigem(), atual.getDestino()) && quantidadeArestaDeUmVerticeMatriz(matriz, atual.getOrigem() ) ==controle+1){
                     caminho.add(selecionado);
                     Vertice aux = this.existeVertice(atual.getDestino());
                     matriz[atual.getOrigem()][atual.getDestino()]=0;
@@ -454,11 +453,11 @@ public abstract class Grafo implements Cloneable {
             }
         }
 
-     return caminho;
+        return caminho;
     }
     
     
-    private int[][] matrizFormatada(int matriz [][]){
+    public int[][] matrizFormatada(int matriz [][]){
         int formatada [][] = new int[matriz.length-1][matriz.length-1];
 
         for(int i=1; i<matriz.length;i++){
@@ -482,7 +481,7 @@ public abstract class Grafo implements Cloneable {
         return qtd==0;
     }
 
-    public Aresta existeAresta(int matriz[][],int id, int controle){
+    public Aresta arestaRestanteVerticeMatriz(int matriz[][],int id, int controle){
         int teste=0;
         for(int i=0; i<matriz[id].length;i++){
                if(matriz[id][i] !=0){
@@ -494,7 +493,8 @@ public abstract class Grafo implements Cloneable {
         }
         return null;
     }
-    public int quantidadeAresta(int matriz[][],int id){
+
+    public int quantidadeArestaDeUmVerticeMatriz(int matriz[][],int id){
         int qtd = 0;
         for(int i=0; i<matriz[id].length;i++){
                if(matriz[id][i] !=0){
@@ -503,6 +503,17 @@ public abstract class Grafo implements Cloneable {
         }
         return qtd;
     }
+
+    public void addArestaMatriz(int matriz[][], int idInicial, int idFinal){
+        matriz[idInicial][idFinal]=1;
+        matriz[idFinal][idInicial]=1;
+    }
+
+    public void removerArestaMatriz(int matriz[][], int idInicial, int idFinal){
+        matriz[idInicial][idFinal]=0;
+        matriz[idFinal][idInicial]=0;
+    }
+
     public Lista<Aresta> tarjan() {
         this.bridges.removeAll();
         return Algorithms.BR(this, this.getAllVertices(), this.bridges);
