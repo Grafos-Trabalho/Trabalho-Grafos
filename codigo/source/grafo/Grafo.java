@@ -16,7 +16,6 @@ public abstract class Grafo implements Cloneable {
 
     public final String nome;
     protected ABB<Vertice> vertices;
-    Lista<Aresta> bridges;
     // #endregion
 
     // #region Construtor
@@ -26,7 +25,6 @@ public abstract class Grafo implements Cloneable {
      */
     private void init() {
         this.vertices = new ABB<Vertice>();
-        this.bridges = new Lista<Aresta>();
     }
 
     public Grafo(String nome, int tam) {
@@ -515,7 +513,6 @@ public abstract class Grafo implements Cloneable {
     }
 
     public Lista<Aresta> tarjan() {
-        this.bridges.removeAll();
-        return Algorithms.BR(this.getAllVertices(), this.bridges);
+        return Algorithms.BR(this.getAllVertices());
     }
 }

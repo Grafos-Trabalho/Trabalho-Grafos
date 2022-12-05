@@ -67,8 +67,9 @@ public final class Algorithms {
         }
     }
 
-    public static Lista<Aresta> BR(Vertice[] allVertices, Lista<Aresta> bridges) {
+    public static Lista<Aresta> BR(Vertice[] allVertices) {
         int[] low, disc;
+        Lista<Aresta> bridges = new Lista<Aresta>();
         low = disc = new int[allVertices.length];
         Time = 0;
         int u;
