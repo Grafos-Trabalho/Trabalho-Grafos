@@ -69,4 +69,13 @@ public class Aresta {
     public void setRotulo(String rotulo) {
         this.rotulo = rotulo;
     }
+
+    @Override
+
+    public boolean equals(Object aresta){
+        if((this.origem == ((Aresta)aresta).getOrigem() && this.getDestino() == ((Aresta)aresta).getDestino()) || (this.origem == ((Aresta)aresta).getDestino() && this.getDestino() == ((Aresta)aresta).getOrigem())){
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,5 +1,8 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import source.Lista;
 import source.grafo.*;
 
@@ -81,75 +84,7 @@ public class App {
 
         grafoPR.salvar();
 
-        System.out.println("\n");
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan:\n");
-
-        GrafoNaoPonderado grafoTarjan = new GrafoNaoPonderado("ponteTarjan", 5);
-        grafoTarjan.addAresta(1, 0);
-        grafoTarjan.addAresta(1, 2);
-        grafoTarjan.addAresta(0, 2);
-        grafoTarjan.addAresta(0, 3);
-        grafoTarjan.addAresta(3, 4);
-        grafoTarjan.addAresta(0, 5);
-        Lista<Aresta> arestas = grafoTarjan.tarjan();
-
-        arestas.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
-
-        grafoTarjan.salvar();
-
-        System.out.println("\n");
-
-        boolean ponte = grafoTarjan.ePonte(3, 4);
-        System.out.println("O vértice 3-4 é ponte? - " + ponte);
-        ponte = grafoTarjan.ePonte(0, 5);
-        System.out.println("O vértice 0-5 é ponte? - " + ponte);
-        ponte = grafoTarjan.ePonte(0, 3);
-        System.out.println("O vértice 0-3 é ponte? - " + ponte);
-        ponte = grafoTarjan.ePonte(0, 1);
-        System.out.println("O vértice 0-1 é ponte? - " + ponte);
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Testando achar todas as pontes do grafo com o algoritmo de Tarjan 2:\n");
-
-        GrafoNaoPonderado grafoTarjan2 = new GrafoNaoPonderado("ponteTarjan2", 15);
         
-        grafoTarjan2.addAresta(0, 1);
-
-        grafoTarjan2.addAresta(2, 3);
-        grafoTarjan2.addAresta(2, 6);
-        grafoTarjan2.addAresta(6, 7);
-
-        grafoTarjan2.addAresta(4, 5);
-        grafoTarjan2.addAresta(4, 8);
-        grafoTarjan2.addAresta(4, 9);
-        grafoTarjan2.addAresta(8, 9);
-        grafoTarjan2.addAresta(8, 13);
-        grafoTarjan2.addAresta(9, 13);
-        grafoTarjan2.addAresta(12, 13);
-        grafoTarjan2.addAresta(9, 10);
-        
-        grafoTarjan2.addAresta(10, 11);
-        grafoTarjan2.addAresta(10, 14);
-        grafoTarjan2.addAresta(11, 15);
-        grafoTarjan2.addAresta(14, 15);
-
-        Lista<Aresta> arestasTarjan2 = grafoTarjan2.tarjan();
-
-        arestasTarjan2.stream().forEach((aresta) -> System.out.println(aresta.getOrigem() + " -> " + aresta.getDestino()));
-
-        System.out.println("\n");
-
-        boolean ponte2 = grafoTarjan2.ePonte(0, 1);
-        System.out.println("O vértice 0-1 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(12, 13);
-        System.out.println("O vértice 12-13 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(9, 10);
-        System.out.println("O vértice 9-10 é ponte? - " + ponte2);
-        ponte2 = grafoTarjan2.ePonte(10, 11);
-        System.out.println("O vértice 10-11 é ponte? - " + ponte2);
-
         /*System.out.println("\n====================================================================\n");
         System.out.println("Testando fleury\n");
 
@@ -236,5 +171,59 @@ public class App {
 
         // Testando se a matriz ficou vazia
         System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));*/
+    
+        System.out.println("\n====================================================================\n");
+        System.out.println("Testando fleury\n");
+        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado");
+        for (int i = 0; i < 7; i++) {
+            grafoNaoPonderado25.addVertice(i);
+        }
+        grafoNaoPonderado25.addAresta(0, 1);
+        grafoNaoPonderado25.addAresta(0, 2);
+        
+        grafoNaoPonderado25.addAresta(1, 2);
+        grafoNaoPonderado25.addAresta(1, 5);
+        grafoNaoPonderado25.addAresta(1, 3);
+        grafoNaoPonderado25.addAresta(2, 3);
+        grafoNaoPonderado25.addAresta(2, 4);
+        grafoNaoPonderado25.addAresta(3, 4);
+        grafoNaoPonderado25.addAresta(3, 5);
+        
+        grafoNaoPonderado25.addAresta(4, 5);
+        grafoNaoPonderado25.addAresta(4, 6);
+        grafoNaoPonderado25.addAresta(5, 6);
+        
+        
+        for(Vertice selecionado: grafoNaoPonderado25.fleuryTarjan()){
+            System.out.println(selecionado.getId());
+        }
+
+        System.out.println("\n====================================================================\n");
+        System.out.println("Testando fleury com Tarjan\n");
+        GrafoNaoPonderado grafoNaoPonderado26 = new GrafoNaoPonderado("grafoNaoPonderado");
+        for (int i = 0; i < 7; i++) {
+            grafoNaoPonderado26.addVertice(i);
+        }
+        grafoNaoPonderado26.addAresta(0, 1);
+        grafoNaoPonderado26.addAresta(0, 2);
+        
+        grafoNaoPonderado26.addAresta(1, 2);
+        grafoNaoPonderado26.addAresta(1, 5);
+        grafoNaoPonderado26.addAresta(1, 3);
+        grafoNaoPonderado26.addAresta(2, 3);
+        grafoNaoPonderado26.addAresta(2, 4);
+        grafoNaoPonderado26.addAresta(3, 4);
+        grafoNaoPonderado26.addAresta(3, 5);
+        
+        grafoNaoPonderado26.addAresta(4, 5);
+        grafoNaoPonderado26.addAresta(4, 6);
+        grafoNaoPonderado26.addAresta(5, 6);
+        
+        
+        for(Vertice selecionado: grafoNaoPonderado26.fleuryTarjan()){
+            System.out.println(selecionado.getId());
+        }
+
     }
+    
 }

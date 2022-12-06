@@ -1,5 +1,6 @@
 package source;
 
+import java.util.ArrayList;
 import java.util.List;
 import source.grafo.*;
 
@@ -40,7 +41,7 @@ public final class Algorithms {
 
     private static int Time;
     
-    private static void dfsBR(Vertice vertice, Lista<Aresta> bridges, int[] disc, int[] low, int p) {
+    private static void dfsBR(Vertice vertice, List<Aresta> bridges, int[] disc, int[] low, int p) {
         int u = vertice.getId();
         low[u] = disc[u] = ++Time;
 
@@ -67,9 +68,9 @@ public final class Algorithms {
         }
     }
 
-    public static Lista<Aresta> BR(Vertice[] allVertices) {
+    public static List<Aresta> BR(Vertice[] allVertices) {
         int[] low, disc;
-        Lista<Aresta> bridges = new Lista<Aresta>();
+        List<Aresta> bridges = new ArrayList<Aresta>();
         low = disc = new int[allVertices.length];
         Time = 0;
         int u;
