@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import source.Lista;
@@ -8,61 +9,6 @@ import source.grafo.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Teste do grafo completo:");
-
-        GrafoCompleto completo = new GrafoCompleto("completo", 30);
-        System.out.println("Tamanho do grafo: " + completo.tamanho());
-        System.out.println("O Grafo é completo? " + completo.completo());
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Busca em profundidade: ");
-
-        GrafoNaoPonderado grafo = new GrafoNaoPonderado("GrafoDaBuscaEmProfundidade");
-        grafo.addVertice(1);
-        grafo.addVertice(2);
-        grafo.addVertice(3);
-        grafo.addVertice(4);
-        grafo.addVertice(5);
-        grafo.addAresta(1, 3);
-        grafo.addAresta(1, 2);
-        grafo.addAresta(3, 5);
-        Lista<Vertice> visitados = grafo.buscaEmProfundidade(1);
-
-        Vertice[] visitadosArray = new Vertice[100];
-        visitados.allElements(visitadosArray);
-
-        for (Vertice vertice : visitadosArray) {
-            if (vertice != null) {
-                System.out.println(vertice.getId());
-            }
-        }
-
-        System.out.println("\n====================================================================\n");
-        System.out.println("Subgrafo:");
-
-        GrafoNaoPonderado grafoNaoPonderado1 = new GrafoNaoPonderado("grafoNaoPonderado");
-        for (int i = 1; i <= 999; i++) {
-            grafoNaoPonderado1.addVertice(i);
-        }
-
-        for (int i = 1; i <= 999; i = i + 2) {
-            grafoNaoPonderado1.addAresta(i, i + 1);
-        }
-        System.out.println("Ordem do grafo não ponderado: " + grafoNaoPonderado1.ordem());
-        System.out.println("Tamanho do grafo não ponderado: " + grafoNaoPonderado1.tamanho());
-
-        grafoNaoPonderado1.salvar();
-
-        Lista<Vertice> listaDeVertices = new Lista<Vertice>();
-
-        for (int i = 1; i < 499; i++) {
-            listaDeVertices.add(new Vertice(i));
-        }
-
-        GrafoNaoPonderado subGrafo = grafoNaoPonderado1.subGrafo(listaDeVertices);
-        subGrafo.salvar();
 
         System.out.println("\n====================================================================\n");
         System.out.println("Testando grafo ponderado e rotulado:\n");
@@ -84,62 +30,6 @@ public class App {
 
         grafoPR.salvar();
 
-        
-        /*System.out.println("\n====================================================================\n");
-        System.out.println("Testando fleury\n");
-
-        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado");
-        for (int i = 0; i < 7; i++) {
-            grafoNaoPonderado25.addVertice(i);
-        }
-
-        grafoNaoPonderado25.addAresta(0, 1);
-        grafoNaoPonderado25.addAresta(0, 2);
-        
-        grafoNaoPonderado25.addAresta(1, 2);
-        grafoNaoPonderado25.addAresta(1, 5);
-        grafoNaoPonderado25.addAresta(1, 3);
-
-        grafoNaoPonderado25.addAresta(2, 3);
-        grafoNaoPonderado25.addAresta(2, 4);
-
-        grafoNaoPonderado25.addAresta(3, 4);
-        grafoNaoPonderado25.addAresta(3, 5);
-
-        
-        grafoNaoPonderado25.addAresta(4, 5);
-        grafoNaoPonderado25.addAresta(4, 6);
-
-        grafoNaoPonderado25.addAresta(5, 6);
-
-        
-        
-        for(Vertice selecionado: grafoNaoPonderado25.fleury()){
-            System.out.println(selecionado.getId());
-        }
-
-        System.out.println("\nSegundo teste fleury: \n");
-
-        GrafoNaoPonderado grafoNaoPonderado23 = new GrafoNaoPonderado("grafoNaoPonderado2");
-        for (int i = 0; i < 6; i++) {
-            grafoNaoPonderado23.addVertice(i);
-        }
-        grafoNaoPonderado23.addAresta(0, 1);
-        grafoNaoPonderado23.addAresta(0, 3);
-        grafoNaoPonderado23.addAresta(0, 5);
-        grafoNaoPonderado23.addAresta(0, 4);
-
-        grafoNaoPonderado23.addAresta(1, 2);
-        grafoNaoPonderado23.addAresta(1, 5);
-        grafoNaoPonderado23.addAresta(1, 3);
-
-        grafoNaoPonderado23.addAresta(3, 2);
-        grafoNaoPonderado23.addAresta(3, 4);
-
-    
-        for(Vertice selecionado: grafoNaoPonderado23.fleury()){
-            System.out.println(selecionado.getId());
-        }
 
         System.out.println("\n====================================================================\n");
         System.out.println("Teste métodos matriz:\n");
@@ -170,59 +60,117 @@ public class App {
         grafoTesteMatriz.removerArestaMatriz(matrizFormatada, 1, 2);
 
         // Testando se a matriz ficou vazia
-        System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));*/
+        System.out.println("A matriz está vazia: " + grafoTesteMatriz.matrizVazia(matrizFormatada));
     
         System.out.println("\n====================================================================\n");
-        System.out.println("Testando fleury\n");
-        GrafoNaoPonderado grafoNaoPonderado25 = new GrafoNaoPonderado("grafoNaoPonderado");
+        System.out.println("Testando fleury com método de matriz\n");
+        System.out.println("Exemplo 1:\n");
+        GrafoNaoPonderado grafo7Vertices = new GrafoNaoPonderado("grafoNaoPonderado");
         for (int i = 0; i < 7; i++) {
-            grafoNaoPonderado25.addVertice(i);
+            grafo7Vertices.addVertice(i);
         }
-        grafoNaoPonderado25.addAresta(0, 1);
-        grafoNaoPonderado25.addAresta(0, 2);
+        grafo7Vertices.addAresta(0, 1);
+        grafo7Vertices.addAresta(0, 2);
         
-        grafoNaoPonderado25.addAresta(1, 2);
-        grafoNaoPonderado25.addAresta(1, 5);
-        grafoNaoPonderado25.addAresta(1, 3);
-        grafoNaoPonderado25.addAresta(2, 3);
-        grafoNaoPonderado25.addAresta(2, 4);
-        grafoNaoPonderado25.addAresta(3, 4);
-        grafoNaoPonderado25.addAresta(3, 5);
+        grafo7Vertices.addAresta(1, 2);
+        grafo7Vertices.addAresta(1, 5);
+        grafo7Vertices.addAresta(1, 3);
+        grafo7Vertices.addAresta(2, 3);
+        grafo7Vertices.addAresta(2, 4);
+        grafo7Vertices.addAresta(3, 4);
+        grafo7Vertices.addAresta(3, 5);
         
-        grafoNaoPonderado25.addAresta(4, 5);
-        grafoNaoPonderado25.addAresta(4, 6);
-        grafoNaoPonderado25.addAresta(5, 6);
+        grafo7Vertices.addAresta(4, 5);
+        grafo7Vertices.addAresta(4, 6);
+        grafo7Vertices.addAresta(5, 6);
         
-        
-        for(Vertice selecionado: grafoNaoPonderado25.fleuryTarjan()){
+        long tempoInicial = System.currentTimeMillis();
+        for(Vertice selecionado: grafo7Vertices.fleury()){
             System.out.println(selecionado.getId());
         }
+        System.out.println("O exemplo 1 com matriz executou em " + (System.currentTimeMillis() - tempoInicial)+" milisegundos\n");
+
+        System.out.println("Exemplo 2:\n");
+        GrafoNaoPonderado grafo10Vertices = new GrafoNaoPonderado("grafoNaoPonderado");
+        for (int i = 0; i < 10; i++) {
+            grafo10Vertices.addVertice(i);
+        }
+        grafo10Vertices.addAresta(0, 1);
+        grafo10Vertices.addAresta(1, 9);
+        grafo10Vertices.addAresta(0, 9);
+        grafo10Vertices.addAresta(9, 6);
+        grafo10Vertices.addAresta(6, 7);
+        grafo10Vertices.addAresta(7, 8);
+        grafo10Vertices.addAresta(8, 9);
+        grafo10Vertices.addAresta(6, 5);
+        grafo10Vertices.addAresta(6, 1);
+        grafo10Vertices.addAresta(1, 2);
+        grafo10Vertices.addAresta(2, 5);
+        grafo10Vertices.addAresta(2, 4);
+        grafo10Vertices.addAresta(4, 3);
+        grafo10Vertices.addAresta(2, 3);
+
+        tempoInicial = System.currentTimeMillis();
+        for(Vertice selecionado: grafo10Vertices.fleury()){
+            System.out.println(selecionado.getId());
+        }
+        System.out.println("O exemplo 2 com matriz executou em " + (System.currentTimeMillis() - tempoInicial)+" milisegundos\n");
 
         System.out.println("\n====================================================================\n");
         System.out.println("Testando fleury com Tarjan\n");
-        GrafoNaoPonderado grafoNaoPonderado26 = new GrafoNaoPonderado("grafoNaoPonderado");
+        System.out.println("Exemplo 1:\n");
+        
+        GrafoNaoPonderado grafo7VerticesTarjan = new GrafoNaoPonderado("grafoNaoPonderado");
         for (int i = 0; i < 7; i++) {
-            grafoNaoPonderado26.addVertice(i);
+            grafo7VerticesTarjan.addVertice(i);
         }
-        grafoNaoPonderado26.addAresta(0, 1);
-        grafoNaoPonderado26.addAresta(0, 2);
+        grafo7VerticesTarjan.addAresta(0, 1);
+        grafo7VerticesTarjan.addAresta(0, 2);
         
-        grafoNaoPonderado26.addAresta(1, 2);
-        grafoNaoPonderado26.addAresta(1, 5);
-        grafoNaoPonderado26.addAresta(1, 3);
-        grafoNaoPonderado26.addAresta(2, 3);
-        grafoNaoPonderado26.addAresta(2, 4);
-        grafoNaoPonderado26.addAresta(3, 4);
-        grafoNaoPonderado26.addAresta(3, 5);
+        grafo7VerticesTarjan.addAresta(1, 2);
+        grafo7VerticesTarjan.addAresta(1, 5);
+        grafo7VerticesTarjan.addAresta(1, 3);
+        grafo7VerticesTarjan.addAresta(2, 3);
+        grafo7VerticesTarjan.addAresta(2, 4);
+        grafo7VerticesTarjan.addAresta(3, 4);
+        grafo7VerticesTarjan.addAresta(3, 5);
         
-        grafoNaoPonderado26.addAresta(4, 5);
-        grafoNaoPonderado26.addAresta(4, 6);
-        grafoNaoPonderado26.addAresta(5, 6);
-        
-        
-        for(Vertice selecionado: grafoNaoPonderado26.fleuryTarjan()){
+        grafo7VerticesTarjan.addAresta(4, 5);
+        grafo7VerticesTarjan.addAresta(4, 6);
+        grafo7VerticesTarjan.addAresta(5, 6);
+
+        tempoInicial = System.currentTimeMillis();
+        for(Vertice selecionado: grafo7VerticesTarjan.fleuryTarjan()){
             System.out.println(selecionado.getId());
         }
+        System.out.println("O exemplo 1 com Tarjan executou em " + (System.currentTimeMillis() - tempoInicial)+" milisegundos\n");
+
+        System.out.println("Exemplo 2:\n");
+
+        GrafoNaoPonderado grafo10VerticesTarjan = new GrafoNaoPonderado("grafoNaoPonderado");
+        for (int i = 0; i < 10; i++) {
+            grafo10VerticesTarjan.addVertice(i);
+        }
+        grafo10VerticesTarjan.addAresta(0, 1);
+        grafo10VerticesTarjan.addAresta(1, 9);
+        grafo10VerticesTarjan.addAresta(0, 9);
+        grafo10VerticesTarjan.addAresta(9, 6);
+        grafo10VerticesTarjan.addAresta(6, 7);
+        grafo10VerticesTarjan.addAresta(7, 8);
+        grafo10VerticesTarjan.addAresta(8, 9);
+        grafo10VerticesTarjan.addAresta(6, 5);
+        grafo10VerticesTarjan.addAresta(6, 1);
+        grafo10VerticesTarjan.addAresta(1, 2);
+        grafo10VerticesTarjan.addAresta(2, 5);
+        grafo10VerticesTarjan.addAresta(2, 4);
+        grafo10VerticesTarjan.addAresta(4, 3);
+        grafo10VerticesTarjan.addAresta(2, 3);
+
+        tempoInicial = System.currentTimeMillis();
+        for(Vertice selecionado: grafo10VerticesTarjan.fleuryTarjan()){
+            System.out.println(selecionado.getId());
+        }
+        System.out.println("O exemplo 2 com Tarjan executou em " + (System.currentTimeMillis() - tempoInicial)+" milisegundos");
 
     }
     
