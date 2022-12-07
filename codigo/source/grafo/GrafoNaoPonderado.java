@@ -1,5 +1,12 @@
 package source.grafo;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import source.Arquivo;
 import source.Lista;
 
 public class GrafoNaoPonderado extends GrafoMutavel {
@@ -53,5 +60,37 @@ public class GrafoNaoPonderado extends GrafoMutavel {
         }
         return novoSubGrafo;
     }
+
+    @Override
+    public void carregar(String arquivo) throws IOException {
+        Arquivo arq = new Arquivo("codigo/app/files/", arquivo, "read");
+        String linha = arq.readLine();
+        String[] split = linha.split(" ");
+        Integer conteudo;
+        conteudo = Integer.parseUnsignedInt(split[1].trim());
+        arq.readLine();
+        List<Integer> verticeControle = new ArrayList<Integer>();
+        for (int i = 0; i < conteudo - 1; i++) {
+            linha = arq.readLine();
+            if (!verticeControle.contains(Integer.parseInt(linha.split(" ")[0]))) {
+                this.addVertice(Integer.parseInt(linha.split(" ")[0]));
+                verticeControle.add(Integer.parseInt(linha.split(" ")[0]));
+            }
+        }
+
+        Arquivo arq1 = new Arquivo("codigo/app/files/", arquivo, "read");
+        linha = arq1.readLine();
+        linha = arq1.readLine();
+        linha = arq1.readLine();
+
+        while(linha.split(" ")[0].trim() != "" ) {
+            split = linha.split(" ");
+            this.addAresta(Integer.parseUnsignedInt(split[0].trim()), Integer.parseUnsignedInt(split[1].trim()));
+            linha = arq1.readLine();
+        }
+        arq.close();
+
+    }
     // #endregion
+
 }

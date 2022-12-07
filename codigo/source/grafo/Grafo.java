@@ -1,5 +1,6 @@
 package source.grafo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -571,4 +572,8 @@ public abstract class Grafo implements Cloneable {
     public List<Aresta> tarjan() {
         return Algorithms.BR(this.getAllVertices());
     }
+
+    public void carregar (String arquivo) throws IOException{}
+
+
 }
