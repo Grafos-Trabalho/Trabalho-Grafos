@@ -25,7 +25,7 @@ public class Arquivo {
                     break;
 
                 case "read":
-                    this.buffRead = new BufferedReader(new FileReader(path + file + ".txt"));
+                    this.buffRead = new BufferedReader(new FileReader(path + file + ".net"));
                     break;
 
                 case "net":

@@ -201,29 +201,8 @@ public class App {
         System.out.println("\n====================================================================\n");
         System.out.println("Testando fleury com Tarjan\n");
         GrafoNaoPonderado grafoNaoPonderado26 = new GrafoNaoPonderado("grafoNaoPonderado");
-        for (int i = 0; i < 7; i++) {
-            grafoNaoPonderado26.addVertice(i);
-        }
-        grafoNaoPonderado26.addAresta(0, 1);
-        grafoNaoPonderado26.addAresta(0, 2);
-        
-        grafoNaoPonderado26.addAresta(1, 2);
-        grafoNaoPonderado26.addAresta(1, 5);
-        grafoNaoPonderado26.addAresta(1, 3);
-        grafoNaoPonderado26.addAresta(2, 3);
-        grafoNaoPonderado26.addAresta(2, 4);
-        grafoNaoPonderado26.addAresta(3, 4);
-        grafoNaoPonderado26.addAresta(3, 5);
-        
-        grafoNaoPonderado26.addAresta(4, 5);
-        grafoNaoPonderado26.addAresta(4, 6);
-        grafoNaoPonderado26.addAresta(5, 6);
-        
-        
-        for(Vertice selecionado: grafoNaoPonderado26.fleuryTarjan()){
-            System.out.println(selecionado.getId());
-        }
-
+        grafoNaoPonderado26.carregar("grafoNaoPonderado");
+        System.out.println(grafoNaoPonderado26.existeAresta(1, 2).getOrigem() + " - " + grafoNaoPonderado26.existeAresta(1, 2).getDestino());
     }
     
 }
